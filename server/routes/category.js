@@ -15,14 +15,12 @@ router.get('/', (req, res, next) => {
   CategoryModel
   .find(search)
   .then((data) => {
-    let tempData = {};
+    let tempData = {
+      tags: [],
+      categorys: []
+    };
     data.forEach(item => {
-      if (tempData[item.type]) {
-        tempData[item.type].push(item);
-      } else {
-        tempData[item.type] = [];
-        tempData[item.type].push(item);
-      }
+      tempData[item.type + 's'].push(item);
     })
     res.status(200);
     res.json({
@@ -38,7 +36,7 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
   const category = req.body;
   category.date = new Date().getTime();
-  CategoryModel.findOne({name: category.name})
+  CategoryModel.findOne({name: category.name, type: category.type})
   .then((data) => {
     if (data) {
       res.status(400);
