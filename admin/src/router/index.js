@@ -2,8 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Signin from '@/views/signin'
 import Home from '@/views/home'
-import AddCategory from '@/views/addcategory'
-import AddTag from '@/views/addtag'
 import Category from '@/views/categorys'
 import Article from '@/views/article'
 import Base from '@/views/base'
@@ -32,16 +30,8 @@ export default new Router({
         name: 'home',
         component: Home
       }, {
-        path: 'addcategory',
-        name: 'addcategory',
-        component: AddCategory
-      }, {
-        path: 'addtag',
-        name: 'addtag',
-        component: AddTag
-      }, {
-        path: 'category',
-        name: 'category',
+        path: 'categorys',
+        name: 'categorys',
         component: Category
       }, {
         path: 'article',
@@ -83,6 +73,10 @@ export default new Router({
         path: 'user',
         name: 'user',
         component: User
+      }, {
+        path: 'edit/:id',
+        name: 'edit',
+        component: Publish
       }]
     }, {
       path: '/signin',

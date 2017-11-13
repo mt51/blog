@@ -28,20 +28,30 @@
         <MenuItem name="themes"><router-link to="themes">主题列表</router-link></MenuItem>
         <MenuItem name="editheme"><router-link to="editheme">编辑主题</router-link></MenuItem>
       </Submenu>
-      <Submenu name="4">
+      <!-- <Submenu name="4">
         <template slot="title">
           <Icon type="star"></Icon>分类管理
         </template>
         <MenuItem name="categorys"><router-link to="categorys">分类列表</router-link></MenuItem>
         <MenuItem name="addcategory"><router-link to="addcategory">添加分类></router-link></MenuItem>
+      </Submenu> -->
+      <Submenu name="category" class="empty">
+        <template slot="title">
+          <router-link to="categorys"><Icon type="pricetag"></Icon>分类管理</router-link>
+        </template>
       </Submenu>
-      <Submenu name="4">
+      <Submenu name="tags" class="empty">
+        <template slot="title">
+          <router-link to="tags"><Icon type="star"></Icon>标签管理</router-link>
+        </template>
+      </Submenu>
+      <!-- <Submenu name="4">
         <template slot="title">
           <Icon type="pricetag"></Icon>标签管理
         </template>
         <MenuItem name="tags"><router-link to="tags">标签列表</router-link></MenuItem>
         <MenuItem name="addtag"><router-link to="addtag">添加标签</router-link></MenuItem>
-      </Submenu>
+      </Submenu> -->
       <Submenu name="user" class="empty">
         <template slot="title">
           <router-link to="user"><Icon type="settings"></Icon>用户设置</router-link>
@@ -71,6 +81,7 @@
     }
   }
 </script>
+
 <style lang="scss">
   .nav{
     width: 100%;
@@ -124,6 +135,11 @@
         i {
           margin-right: 10px;
         }
+      }
+    }
+    .ivu-menu-item-selected{
+      a {
+        color: #fff;
       }
     }
     a{
