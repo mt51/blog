@@ -9,7 +9,8 @@ const ArticleSchema = new Schema({
   date: Date,
   picurl: String,
   description: String,
-  author: String
+  author: String,
+  draft: Number
 })
 
 module.exports = mongoose.model('article', ArticleSchema);
