@@ -4,13 +4,12 @@
       <Button type="primary" @click.native="addNewCategory">新增分类</Button>
     </div>
     <Table :loading="loading" :columns="columns" :data="data" stripe></Table>
-    <Page :total="total" on-change="fetchCategoryList" class-name="page"></Page>
-    <Modal v-model="modelVisible" title="Title" :styles="{top: '20px'}" on-ok="confirmAdd">
-        <Form v-model="category" :label-width="80">
-          <FormItem label="标签名">
+    <Modal v-model="modelVisible" title="新增分类" :styles="{top: '20px'}" @on-ok="confirm" :loading="formLoading">
+        <Form ref="category" :model="category" :label-width="80" :rules="ruleValidate">
+          <FormItem label="分类名" prop="name">
             <Input v-model="category.name"></Input>
           </FormItem>
-          <FormItem label="描述">
+          <FormItem label="描述" prop="description">
             <Input v-model="category.description"></Input>
           </FormItem>
         </Form>
@@ -76,7 +75,7 @@
         ],
         data: [],
         loading: false,
-        total: 0,
+        formLoading: true,
         currentCategoryId: '',
         category: {
           name: '',
@@ -84,19 +83,24 @@
           type: 'category'
         },
         categorys: [],
-        modelVisible: false
+        modelVisible: false,
+        ruleValidate: {
+          name: [{required: true, message: '分类名不能为空', trigger: 'blur'}]
+        },
+        view: 'add'
       }
     },
     created () {
-      this.fetchCategoryList(1)
+      this.fetchCategoryList()
     },
     methods: {
       fetchCategoryList () {
+        this.loading = true
         this.axios.get('/api/category?type=category')
           .then((response) => {
             if (response.data.code === 0) {
-              this.data = response.data.data
-              this.total = response.data.total
+              this.loading = false
+              this.data = response.data.data.categorys
               this.data.forEach(item => {
                 item.date = formatDate(item.date, 'yyyy-MM-dd')
               })
@@ -105,26 +109,56 @@
       },
       addNewCategory () {
         this.modelVisible = true
+        this.view = 'add'
       },
-      confirmAdd () {
-        this.axios.post('/api/category', this.category)
-          .then(response => {
-            if (response.data.code === 0) {
-              this.$Message.success('保存成功')
-            }
-          })
-          .catch(e => {
-            console.log(e)
-          })
+      confirm () {
+        let url = this.view === 'add' ? '/api/category' : '/api/category/' + this.currentCategoryId
+        let method = this.view === 'add' ? 'post' : 'put'
+        this.$refs.category.validate(valid => {
+          if (valid) {
+            this.axios.request({
+              url: url,
+              data: this.category,
+              method: method
+            })
+            .then(response => {
+              if (response.data.code === 0) {
+                this.modelVisible = false
+                this.$Message.success('保存成功')
+                this.$refs.category.resetFields()
+                this.fetchCategoryList()
+              }
+            })
+            .catch(e => {
+              if (e.response.data.verror) {
+                this.$Message.error(e.response.data.verror.msg)
+                this.formLoading = false
+                this.nextTick(() => {
+                  this.formLoading = true
+                })
+              }
+            })
+          } else {
+            this.formLoading = false
+            this.nextTick(() => {
+              this.formLoading = true
+            })
+          }
+        })
       },
       edit (p) {
-        console.log(p)
+        this.view = 'edit'
+        this.category.name = p.row.name
+        this.category.description = p.row.description
+        this.currentCategoryId = p.row['_id']
+        this.modelVisible = true
       },
-      deleteArticle () {
+      deleteCategoryById () {
         this.axios.delete('/api/category/' + this.currentCategoryId)
         .then(response => {
           if (response.data.code === 0) {
             this.$Message.success('删除成功')
+            this.fetchCategoryList()
           } else {
             this.$Message.error('删除失败')
           }
@@ -137,7 +171,7 @@
           content: '确认删除？',
           okText: '删除',
           cancelText: '取消',
-          onOk: this.deleteArticle
+          onOk: this.deleteCategoryById
         })
       }
     }

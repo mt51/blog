@@ -4,13 +4,12 @@
       <Button type="primary" @click.native="addNewTag">新增标签</Button>
     </div>
     <Table :loading="loading" :columns="columns" :data="data" stripe></Table>
-    <Page :total="total" on-change="fetchTagList" class-name="page"></Page>
-    <Modal v-model="modelVisible" title="Title" :styles="{top: '20px'}" on-ok="confirmAdd">
-        <Form v-model="tag" :label-width="80">
-          <FormItem label="标签名">
+    <Modal v-model="modelVisible" title="添加标签" :styles="{top: '20px'}" @on-ok="confirm" :loading="fomrLoading">
+        <Form ref="tag" :rules="ruleValidate" :model="tag" :label-width="80">
+          <FormItem label="标签名" prop="name">
             <Input v-model="tag.name"></Input>
           </FormItem>
-          <FormItem label="描述">
+          <FormItem label="描述" prop="description">
             <Input v-model="tag.description"></Input>
           </FormItem>
         </Form>
@@ -76,7 +75,7 @@
         ],
         data: [],
         loading: false,
-        total: 0,
+        fomrLoading: true,
         currentTagId: '',
         tag: {
           name: '',
@@ -84,19 +83,24 @@
           type: 'tag'
         },
         tags: [],
-        modelVisible: false
+        modelVisible: false,
+        ruleValidate: {
+          name: [{ required: true, message: '名称不能为空', trigger: 'blur' }]
+        },
+        view: 'add'
       }
     },
     created () {
-      this.fetchTagList(1)
+      this.fetchTagList()
     },
     methods: {
       fetchTagList () {
+        this.loading = true
         this.axios.get('/api/category?type=tag')
           .then((response) => {
             if (response.data.code === 0) {
-              this.data = response.data.data
-              this.total = response.data.total
+              this.loading = false
+              this.data = response.data.data.tags
               this.data.forEach(item => {
                 item.date = formatDate(item.date, 'yyyy-MM-dd')
               })
@@ -105,26 +109,56 @@
       },
       addNewTag () {
         this.modelVisible = true
+        this.view = 'add'
       },
-      confirmAdd () {
-        this.axios.post('/api/category', this.tag)
-          .then(response => {
-            if (response.data.code === 0) {
-              this.$Message.success('保存成功')
-            }
-          })
-          .catch(e => {
-            console.log(e)
-          })
+      confirm () {
+        let url = this.view === 'add' ? '/api/category' : '/api/category/' + this.currentTagId
+        let method = this.view === 'add' ? 'post' : 'put'
+        this.$refs.tag.validate(valid => {
+          if (valid) {
+            this.axios.request({
+              url: url,
+              method: method,
+              data: this.tag
+            })
+            .then(response => {
+              if (response.data.code === 0) {
+                this.modelVisible = false
+                this.$Message.success('保存成功')
+                this.fetchTagList()
+                this.$refs.tag.resetFields()
+              }
+            })
+            .catch(e => {
+              if (e.response.data) {
+                this.$Message.error(e.response.data.verror.msg)
+                this.fomrLoading = false
+                this.$nextTick(() => {
+                  this.fomrLoading = true
+                })
+              }
+            })
+          } else {
+            this.fomrLoading = false
+            this.$nextTick(() => {
+              this.fomrLoading = true
+            })
+          }
+        })
       },
       edit (p) {
-        console.log(p)
+        this.tag.name = p.row.name
+        this.tag.description = p.row.description
+        this.modelVisible = true
+        this.view = 'edit'
+        this.currentTagId = p.row['_id']
       },
-      deleteArticle () {
+      deleteTagById () {
         this.axios.delete('/api/category/' + this.currentTagId)
         .then(response => {
           if (response.data.code === 0) {
             this.$Message.success('删除成功')
+            this.fetchTagList()
           } else {
             this.$Message.error('删除失败')
           }
@@ -137,7 +171,7 @@
           content: '确认删除？',
           okText: '删除',
           cancelText: '取消',
-          onOk: this.deleteArticle
+          onOk: this.deleteTagById
         })
       }
     }
