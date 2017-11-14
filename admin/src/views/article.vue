@@ -16,15 +16,23 @@
             key: 'title',
             ellipsis: true
           }, {
+            title: '摘要',
+            key: 'description',
+            ellipsis: true
+          }, {
+            title: '分类',
+            key: 'category',
+            ellipsis: true
+          }, {
+            title: '标签',
+            key: 'tag',
+            ellipsis: true
+          }, {
             title: '作者',
             key: 'author'
           }, {
             title: '日期',
             key: 'date'
-          }, {
-            title: '摘要',
-            key: 'description',
-            ellipsis: true
           }, {
             title: '操作',
             key: 'action',
@@ -76,11 +84,10 @@
     },
     created () {
       this.fetchArticleList(1)
-      this.fetchTagsAndCategorys()
     },
     methods: {
       fetchArticleList (page) {
-        this.axios.get('/api/article?page=' + page)
+        this.axios.get('/api/article?&page=' + page)
           .then((response) => {
             if (response.data.code === 0) {
               this.data = response.data.data
@@ -92,8 +99,7 @@
           })
       },
       edit (p) {
-        console.log(p)
-        this.router.push({name: 'edit', params: {id: p.row['_id']}})
+        this.$router.replace({path: 'edit', params: {id: p.row['_id']}})
       },
       deleteArticle () {
         this.axios.delete('/api/article/' + this.currentArticleId)
