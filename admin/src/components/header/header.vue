@@ -1,7 +1,7 @@
 <template>
   <div class="admin-header">
   <div class="bread">
-    首页
+    {{bread}}
   </div>
     <div class="nav-items">
       <div class="item">
@@ -24,7 +24,16 @@
   export default {
     data () {
       return {
-        dropVisible: false
+        dropVisible: false,
+        bread: ''
+      }
+    },
+    created () {
+      this.bread = this.$route.meta.nickname
+    },
+    watch: {
+      $route () {
+        this.bread = this.$route.meta.nickname
       }
     },
     methods: {

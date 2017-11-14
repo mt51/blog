@@ -18,6 +18,7 @@ import Dashboard from '@/views/dashboard'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/dashboard',
@@ -28,55 +29,68 @@ export default new Router({
       }, {
         path: 'home',
         name: 'home',
-        component: Home
+        component: Home,
+        meta: {nickname: '首页'}
       }, {
         path: 'categorys',
         name: 'categorys',
-        component: Category
+        component: Category,
+        meta: {nickname: '管理分类'}
       }, {
         path: 'article',
         name: 'article',
-        component: Article
+        component: Article,
+        meta: {nickname: '文章列表'}
       }, {
         path: 'base',
         name: 'base',
-        component: Base
+        component: Base,
+        meta: {nickname: '基本设置'}
       }, {
         path: 'draft',
         name: 'draft',
-        component: Draft
+        component: Draft,
+        meta: {nickname: '草稿箱'}
       }, {
         path: 'edittheme',
         name: 'edittheme',
-        component: EditTheme
+        component: EditTheme,
+        meta: {nickname: '编辑主题'}
       }, {
         path: 'publish',
         name: 'publish',
-        component: Publish
+        component: Publish,
+        meta: {nickname: '添加文章'}
       }, {
         path: 'pages',
         name: 'pages',
-        component: Pages
+        component: Pages,
+        meta: {nickname: '页面列表'}
       }, {
         path: 'statistics',
         name: 'statistics',
-        component: Statistics
+        component: Statistics,
+        meta: {nickname: '统计代码'}
       }, {
         path: 'tags',
         name: 'tags',
-        component: Tags
+        component: Tags,
+        meta: {nickname: '标签管理'}
       }, {
         path: 'themes',
         name: 'themes',
-        component: Themes
+        component: Themes,
+        meta: {nickname: '主题列表'}
       }, {
         path: 'user',
         name: 'user',
-        component: User
+        component: User,
+        meta: {nickname: '用户设置'}
       }, {
         path: 'edit/:id',
         name: 'edit',
-        component: Publish
+        component: Publish,
+        meta: {nickname: '编辑文章'}
       }]
     }, {
       path: '/signin',
