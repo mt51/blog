@@ -49,7 +49,7 @@ export default {
           .then(response => {
             this.$Message.success('登录成功')
             setTimeout(() => {
-              this.$router.push({name: 'dashboard'})
+              this.$router.push({name: 'home'})
             }, 1500)
           })
           .catch(e => {
