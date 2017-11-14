@@ -6,8 +6,15 @@ const ArticleModel = require('../model/article');
 /* 获取文章列表 */
 router.get('/', (req, res, next) => {
   const page = req.query.page || 1;
+  const type  = req.query.type;
+  let search = {
+    draft: false
+  };
+  if (type === 'draft' ) {
+    search.draft = true
+  }
   ArticleModel
-  .find()
+  .find(search)
   .skip((page - 1) * 10)
   .limit(10)
   .sort('-date')
@@ -38,6 +45,40 @@ router.get('/', (req, res, next) => {
       code: 5,
       verror: {
         msg: 'Something error'
+      }
+    })
+  })
+})
+
+router.get('/:id', (req, res, next) => {
+  const articleId = req.params.id;
+  ArticleModel
+  .findOne({'_id': articleId})
+  .then(data => {
+    console.log('文章数据： ', data)
+    if (!data) {
+      res.status(400);
+      res.json({
+        code: 4,
+        verror: {
+          msg: '未查找到相关记录'
+        }
+      })
+      return;
+    }
+    res.status(200);
+    res.json({
+      code: 0,
+      data: data
+    })
+  })
+  .catch(error => {
+    throw new Error(error);
+    res.status(500);
+    res.json({
+      code: 5,
+      data: {
+        msg: 'success'
       }
     })
   })
@@ -74,7 +115,7 @@ router.put('/:id', (req, res, next) => {
   ArticleModel
   .findOne({'_id': articleId})
   .then((article) => {
-    if (!article.length) {
+    if (!article) {
       res.status('400');
       res.json({
         code: 4,
