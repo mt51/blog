@@ -6,18 +6,20 @@
         登录
       </p>
       <div class="signin-box">
+        <Form ref="signin" :model="formData" :rules="ruleValidate">
+          <FormItem prop="account">
+            <Input size="large" v-model="formData.account">
+              <span slot="prepend"><Icon type="person"></Icon></span>
+            </Input>
+          </FormItem>
+          <FormItem prop="password">
+            <Input size="large" v-model="formData.password" type="password">
+              <span slot="prepend"><Icon type="locked"></Icon></span>
+            </Input>
+          </FormItem>
+        </Form>
         <div class="form-item">
-          <Input size="large" v-model="formData.account">
-            <span slot="prepend"><Icon type="person"></Icon></span>
-          </Input>
-        </div>
-        <div class="form-item">
-          <Input size="large" v-model="formData.password" type="password">
-            <span slot="prepend"><Icon type="locked"></Icon></span>
-          </Input>
-        </div>
-        <div class="form-item">
-          <Button type="primary" class="signin-btn">登录</Button>
+          <Button type="primary" class="signin-btn" @click.native="signin">登录</Button>
         </div>
       </div>
     </card>
@@ -32,7 +34,31 @@ export default {
       formData: {
         account: '',
         password: ''
+      },
+      ruleValidate: {
+        account: [{required: true, message: '用户名不能为空', trigger: 'blur'}],
+        password: [{required: true, message: '密码不能为空', trigger: 'blur'}]
       }
+    }
+  },
+  methods: {
+    signin () {
+      this.$refs.signin.validate(valid => {
+        if (valid) {
+          this.axios.post('/api/signin', this.formData)
+          .then(response => {
+            this.$Message.success('登录成功')
+            setTimeout(() => {
+              this.$router.push({name: 'dashboard'})
+            }, 1500)
+          })
+          .catch(e => {
+            if (e.response.data) {
+              this.$Message.error(e.response.data.verror.msg)
+            }
+          })
+        }
+      })
     }
   }
 }
@@ -52,9 +78,6 @@ export default {
   .login-card {
     width: 320px;
     margin-right: 10%;
-  }
-  .form-item{
-    margin-bottom: 20px;
   }
   .signin-btn {
     width: 100%;
