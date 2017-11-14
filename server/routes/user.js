@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('../util/auth.js');
 
 /*获取个人信息*/
 router.get('/userinfo', (req, res, next) => {
