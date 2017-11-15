@@ -1,7 +1,9 @@
 <template>
   <div class="nav">
     <Menu theme="dark" width="auto" :active-name="currentPath" @on-select="routerLink">
-      <div class="layout-logo-left"></div>
+      <div class="layout-logo-left">
+        <!-- <Icon type="social-javascript"></Icon><span>胖先生的‘窝’</span> -->
+      </div>
       <MenuItem name="home">
         <Icon type="home"></Icon>
         <span class="layout-text">首页</span>
@@ -13,7 +15,7 @@
         <MenuItem name="article">文章列表</MenuItem>
         <MenuItem name="publish">文章添加</MenuItem>
       </Submenu>
-      <Submenu name="pages">
+      <!-- <Submenu name="pages">
         <template slot="title">
           <Icon type="paper-airplane"></Icon>页面管理
         </template>
@@ -26,7 +28,7 @@
         </template>
         <MenuItem name="themes">主题列表</MenuItem>
         <MenuItem name="editheme">编辑主题</MenuItem>
-      </Submenu>
+      </Submenu> -->
         <MenuItem name="categorys">
           <Icon type="pricetag"></Icon>
           <span class="layout-text">分类管理</span>
@@ -35,16 +37,16 @@
           <Icon type="star"></Icon>
           <span class="layout-text">标签管理</span>
         </MenuItem>
-      <MenuItem name="user">
+      <!-- <MenuItem name="user">
         <Icon type="settings"></Icon>
         <span class="layout-text">用户设置</span>
-      </MenuItem>
+      </MenuItem> -->
       <Submenu name="">
         <template slot="title">
           <Icon type="gear-b"></Icon>系统设置
         </template>
         <MenuItem name="base">基本设置</MenuItem>
-        <MenuItem name="statistics">统计代码</MenuItem>
+        <!-- <MenuItem name="statistics">统计代码</MenuItem> -->
       </Submenu>
       <MenuItem name="draft">
         <Icon type="ios-compose"></Icon>
@@ -82,6 +84,17 @@
     ul {
       width: 100%;
       box-sizing: border-box;
+    }
+    .layout-logo-left{
+      width: 75%;
+      height: 30px;
+      margin: 20px auto 10px;
+      border-radius: 5px;
+      line-height: 30px;
+      color: #fff;
+      font-size: 16px;
+      text-align: center;
+      background: #646975;
     }
   }
 </style>

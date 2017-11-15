@@ -7,14 +7,16 @@ const signup = require('./signup.js');
 const article = require('./article.js');
 const qiniu = require('./qiniu.js');
 const category = require('./category.js');
-const user = require('./user.js')
+const user = require('./user.js');
+const log = require('./log.js');
 
 router.use('/signin', signin);
 router.use('/article', article);
-router.use('/signout', signout);
+// router.use('/signout', signout);
 router.use('/signup', signup);
 router.use('/qiniu', qiniu);
 router.use('/category', category);
 router.use('/user', user);
+router.use('/log', log);
 
 module.exports = router;

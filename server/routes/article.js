@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const ArticleModel = require('../model/article');
+const jwt = require('../util/auth.js');
 
 /* 获取文章列表 */
 router.get('/', (req, res, next) => {
@@ -85,7 +86,7 @@ router.get('/:id', (req, res, next) => {
 })
 
 /*发布新文章*/
-router.post('/', (req, res, next) => {
+router.post('/', jwt.checkAuth, (req, res, next) => {
   const articleData = req.body;
   articleData.date = new Date().getTime();
   articleData.author = "刘子洋";
@@ -109,7 +110,7 @@ router.post('/', (req, res, next) => {
 })
 
 /*更新文章*/
-router.put('/:id', (req, res, next) => {
+router.put('/:id', jwt.checkAuth, (req, res, next) => {
   const articleId = req.params.id;
   const articleData = req.body;
   ArticleModel
@@ -160,7 +161,7 @@ router.put('/:id', (req, res, next) => {
 })
 
 /*删除文章*/
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', jwt.checkAuth, (req, res, next) => {
   const articleId = req.params.id;
   console.log(articleId)
   ArticleModel

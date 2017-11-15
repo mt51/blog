@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const CategoryModel = require('../model/category');
+const jwt = require('../util/auth.js');
 
 router.get('/', (req, res, next) => {
   const type = req.query.type;
@@ -33,7 +34,7 @@ router.get('/', (req, res, next) => {
   })
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', jwt.checkAuth, (req, res, next) => {
   const category = req.body;
   category.date = new Date().getTime();
   CategoryModel.findOne({name: category.name, type: category.type})
@@ -73,7 +74,7 @@ router.post('/', (req, res, next) => {
   })
 })
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', jwt.checkAuth, (req, res, next) => {
   const categoryData = req.body;
   const categoryId = req.params.id;
   CategoryModel
@@ -121,7 +122,7 @@ router.put('/:id', (req, res, next) => {
   })
 })
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', jwt.checkAuth, (req, res, next) => {
   const categoryId = req.params.id;
   CategoryModel
   .find({'_id': categoryId})

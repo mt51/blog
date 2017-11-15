@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const UserModel = require('../model/user.js');
 const jwt = require('../util/auth.js')
+const LogModel = require('../model/log.js');
 
 /*登录*/
 router.post('/', (req, res, next) => {
@@ -54,6 +55,7 @@ router.post('/', (req, res, next) => {
       UserModel
       .update({account: user.account}, {$set: {token: token}})
       .then(() => {
+        saveLog(req, user.account);
         res.status(200);
         res.json({
           code: 0,
@@ -95,4 +97,38 @@ router.post('/', (req, res, next) => {
   })
 })
 
+const saveLog = (req, account) => {
+  const ip = getIp(req);
+  let log = {
+    account: account,
+    date: new Date().getTime(),
+    ip: ip
+  }
+  const newLog = new LogModel(log);
+  newLog
+  .save()
+  .catch(e => {
+    throw new Error(e);
+  })
+  LogModel
+  .findOne({account: account})
+  .skip(1)
+  .sort('-date')
+  .exec()
+  .then(log => {
+    console.log(log)
+    if (log) {
+      UserModel
+      .update({account: account}, {$set: {lastTime: log.date, lastIp: log.ip}})
+      .catch(e => {
+        throw new Error(e)
+      })
+    }
+  })
+}
+
+const getIp = req => {
+  const ipArr = req.headers['x-forwarded-for'] || req.connection.remoteAddress.split(':');
+  return ipArr[ipArr.length - 1];
+}
 module.exports = router;

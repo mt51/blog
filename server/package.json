@@ -16,6 +16,7 @@
     "jsonwebtoken": "^8.1.0",
     "mongoose": "^4.13.1",
     "morgan": "~1.9.0",
+    "qiniu": "^7.1.1",
     "serve-favicon": "~2.4.5"
   },
   "devDependencies": {

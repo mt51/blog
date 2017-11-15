@@ -47,10 +47,13 @@ export default {
         if (valid) {
           this.axios.post('/api/signin', this.formData)
           .then(response => {
-            this.$Message.success('登录成功')
-            setTimeout(() => {
-              this.$router.push({name: 'home'})
-            }, 1500)
+            if (response.data.code === 0 && response.data.data.token) {
+              this.$Message.success('登录成功')
+              window.localStorage.setItem('token', response.data.data.token)
+              setTimeout(() => {
+                this.$router.push({name: 'home'})
+              }, 1500)
+            }
           })
           .catch(e => {
             if (e.response.data) {

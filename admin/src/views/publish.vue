@@ -3,7 +3,7 @@
     <div class="form-group">
       <Input v-model="articleData.title" placeholder="标题" style="width: 300px"></Input>
       <Input v-model="articleData.description" placeholder="简介" style="width: 300px"></Input>
-      <Select v-model="articleData.tag" style="width:200px;z-index: 1501;" placeholder="标签">
+      <Select v-model="articleData.tag" style="width:200px;z-index: 1501;" multiple placeholder="标签">
         <Option v-for="(item, key) in tags" :value="item.name" :key="key">{{ item.name }}</Option>
       </Select>
       <Select v-model="articleData.category" style="width:200px;z-index: 1501;" placeholder="分类">
@@ -87,6 +87,7 @@
           })
       },
       handleAddImg () {
+        console.log(123)
       }
     },
     components: {
