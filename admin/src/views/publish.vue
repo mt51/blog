@@ -12,11 +12,11 @@
       <Button type="dashed" @click="publish($event, true)">存为草稿</Button>
       <Button type="primary" @click.native="publish">发布</Button>
     </div>
-    <mavonEditor v-model="articleData.mdcont" @imgAdd="handleAddImg"/>
+    <md></md>
   </div>
 </template>
 <script>
-  import { mavonEditor } from 'mavon-editor'
+  import md from '@/components/markdown/markdown'
   import 'mavon-editor/dist/css/index.css'
   export default {
     data () {
@@ -91,16 +91,13 @@
       }
     },
     components: {
-      mavonEditor
+      md
     }
   }
 </script>
 <style lang="scss" scoped>
   .publish{
     padding: 0 20px;
-    .markdown-body{
-      height: calc(100vh - 200px);
-    }
     .form-group{
       width: 100%;
       display: flex;
