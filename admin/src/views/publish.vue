@@ -2,7 +2,7 @@
   <div class="publish">
     <div class="form-group">
       <Input v-model="articleData.title" placeholder="标题" style="width: 300px"></Input>
-      <Input v-model="articleData.description" placeholder="简介" style="width: 300px"></Input>
+      <Input v-model="articleData.description" placeholder="摘要" style="width: 300px"></Input>
       <Select v-model="articleData.tag" style="width:200px;z-index: 1501;" multiple placeholder="标签">
         <Option v-for="(item, key) in tags" :value="item.name" :key="key">{{ item.name }}</Option>
       </Select>
@@ -12,12 +12,11 @@
       <Button type="dashed" @click="publish($event, true)">存为草稿</Button>
       <Button type="primary" @click.native="publish">发布</Button>
     </div>
-    <md></md>
+    <md v-model="articleData.value"></md>
   </div>
 </template>
 <script>
   import md from '@/components/markdown/markdown'
-  import 'mavon-editor/dist/css/index.css'
   export default {
     data () {
       return {
@@ -47,7 +46,6 @@
     },
     methods: {
       publish ($event, draft) {
-        debugger
         if (draft) {
           this.articleData.draft = true
         } else {
@@ -63,7 +61,9 @@
         .then(response => {
           this.$Message.success(response.data.data.msg)
         }).catch(error => {
-          if (error.code !== 0) {
+          if (error.status === 401) {
+            this.$router.push({path: '/signin'})
+          } else {
             this.$Message.error(error.response.data.verror.msg)
           }
         })
@@ -85,9 +85,6 @@
               this.$Message.error(error.response.data.verror.msg)
             }
           })
-      },
-      handleAddImg () {
-        console.log(123)
       }
     },
     components: {

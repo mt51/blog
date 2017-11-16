@@ -131,11 +131,15 @@
             })
             .catch(e => {
               if (e.response.data.verror) {
-                this.$Message.error(e.response.data.verror.msg)
-                this.formLoading = false
-                this.nextTick(() => {
-                  this.formLoading = true
-                })
+                if (e.status === 401) {
+                  this.$router.push({path: '/signin'})
+                } else {
+                  this.$Message.error(e.response.data.verror.msg)
+                  this.formLoading = false
+                  this.nextTick(() => {
+                    this.formLoading = true
+                  })
+                }
               }
             })
           } else {
@@ -161,6 +165,19 @@
             this.fetchCategoryList()
           } else {
             this.$Message.error('删除失败')
+          }
+        })
+        .catch(e => {
+          if (e.response.data.verror) {
+            if (e.status === 401) {
+              this.$router.push({path: '/signin'})
+            } else {
+              this.$Message.error(e.response.data.verror.msg)
+              this.formLoading = false
+              this.nextTick(() => {
+                this.formLoading = true
+              })
+            }
           }
         })
       },

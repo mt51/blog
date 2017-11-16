@@ -110,6 +110,13 @@
             this.$Message.error('删除失败')
           }
         })
+        .catch(error => {
+          if (error.status === 401) {
+            this.$router.push({path: '/signin'})
+          } else {
+            this.$Message.error(error.response.error.msg)
+          }
+        })
       },
       deleteTips (p) {
         this.currentArticleId = p.row['_id']
