@@ -10,7 +10,8 @@ const ArticleSchema = new Schema({
   picurl: String,
   description: String,
   author: String,
-  draft: Boolean
+  draft: Boolean,
+  origin: String
 })
 
 module.exports = mongoose.model('article', ArticleSchema);
