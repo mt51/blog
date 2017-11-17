@@ -41,6 +41,12 @@
         this.dropVisible = !this.dropVisible
       },
       handleSignout () {
+        window.localStorage.removeItem('token')
+        this.dropVisible = false
+        this.$Message.success('退出登录成功')
+        setTimeout(() => {
+          this.$router.push({path: '/signin'})
+        }, 1000)
       }
     },
     components: {
