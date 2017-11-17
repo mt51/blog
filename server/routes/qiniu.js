@@ -7,7 +7,7 @@ const mac = new qiniu.auth.digest.Mac(config.AK, config.SK);
 
 /*换取七牛云token*/
 router.get('/token', (req, res, next) => {
-  const key = 'avatar';
+  const key = 'pic_' + new Date().getTime();
   const options = {
     scope: 'blog',
     returnBody: '{"key": "$(key)","hash": "${etag}"}',
