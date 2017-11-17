@@ -18,33 +18,44 @@
     </div>
     <div class="md-editor">
       <textarea :value="value" ref="markdown" @input="handleInput" @keydown.tab.prevent="handleTab"></textarea>
-      <div v-if="preview" class="preview" v-html="compileMarkdown"></div>
+      <div v-if="preview" class="preview markdown-body" v-html="compileMarkdown"></div>
     </div>
-    <Modal title="上传图片" v-model="modalVisible" @on-ok="handleOk">
-      <Upload multiple type="drag" action="//jsonplaceholder.typicode.com/posts/" >
+    <Modal title="上传图片" v-model="modalVisible">
+      <Upload ref="upload" multiple type="drag" name="file" action="//upload.qiniu.com/" :before-upload="beforeUpload" :on-success="handleSuccess" :data="form">
         <div style="padding: 20px 0">
             <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-            <p>Click or drag files here to upload</p>
+            <p>点击或拖拽文件到此处</p>
         </div>
       </Upload>
+    </Modal>
+    <Modal title="图片路径" v-model="pathModel" :mask-closable="false">
+      <Input v-model="path" id="path"></Input>
     </Modal>
   </div>
 </template>
 <script>
-  import { marked } from '@/util/marked'
+  import { marked, splitMarkdown } from '@/util/marked'
+  const BASE_URL = '//ozft0883x.bkt.clouddn.com/'
   export default {
     name: 'markdown',
     data () {
       return {
         preview: true,
         modalVisible: false,
-        full: false
+        full: false,
+        form: {
+          token: ''
+        },
+        path: '',
+        pathModel: false
       }
     },
     props: ['value'],
     computed: {
       compileMarkdown () {
-        return marked(this.value)
+        const result = splitMarkdown(this.value)
+        console.log(result)
+        return marked(result.mdcont)
       }
     },
     methods: {
@@ -56,8 +67,7 @@
         this.$emit('input', value)
       },
       handleTab (e) {
-        this.preInputText('\t')
-        e.preventDefault()
+        this.preInputText(' ')
       },
       preInputText (text, preStart, preEnd) {
         let textControl = this.$refs.markdown
@@ -83,7 +93,7 @@
         this.preInputText('> 引用', 2, 4)
       },
       codeText () {
-        this.preInputText('```\ncode block\n```', 5, 15)
+        this.preInputText('```\n\tcode block\n```', 4, 15)
       },
       insertMore () {
         this.preInputText('<!--more-->', 12, 12)
@@ -107,11 +117,11 @@
             break
           }
           case '5-1': {
-            this.boldText()
+            console.log('链接')
             break
           }
           case '5-2': {
-            this.boldText()
+            this.modalVisible = true
             break
           }
           case '6': {
@@ -129,16 +139,40 @@
           }
         }
       },
-      beforeUpload () {
-        console.log(123)
+      beforeUpload (file) {
+        return this.axios.get('/api/qiniu/token')
+          .then(response => {
+            this.form.token = response.data.data.token
+            this.form.key = response.data.data.key
+          })
       },
-      handleOk () {}
+      handleSuccess (response) {
+        this.modalVisible = false
+        this.$refs.upload.clearFiles()
+        this.pathModel = true
+        this.path = `![图片](${BASE_URL}${response.key})`
+      },
+      getData () {
+        const result = splitMarkdown(this.value)
+        result.htmlcont = this.compileMarkdown
+        result.origin = this.value
+        console.log(result)
+        return result
+      }
     }
   }
 </script>
 <style lang="scss" scoped>
+  @import url(../../assets/markdown.css);
+  @import url(../../../node_modules/highlight.js/styles/github.css);
   .markdown {
     background: #fff;
+    z-index: 9;
+    position: relative;
+    box-shadow: 0 0 1px #ccc;
+    .ivu-menu-light {
+      background: #f5f5f5;
+    }
     .md-editor{
       display: flex;
       justify-content: space-between;
@@ -150,6 +184,9 @@
         padding: 10px;
         line-height: 1.5;
         font-size: 16px;
+        background: #f9f9f9;
+        border: none;
+        border-right: 1px solid #ccc;
       }
       .preview {
         width: 100%;
@@ -157,6 +194,7 @@
         padding: 10px;
         line-height: 1.5;
         font-size: 16px;
+        background: #eee;
       }
     }
     &.full-screen {
