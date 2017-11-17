@@ -1,18 +1,10 @@
 <template>
   <div class="publish">
     <div class="form-group">
-      <Input v-model="articleData.title" placeholder="标题" style="width: 300px"></Input>
-      <Input v-model="articleData.description" placeholder="摘要" style="width: 300px"></Input>
-      <Select v-model="articleData.tag" style="width:200px;z-index: 1501;" multiple placeholder="标签">
-        <Option v-for="(item, key) in tags" :value="item.name" :key="key">{{ item.name }}</Option>
-      </Select>
-      <Select v-model="articleData.category" style="width:200px;z-index: 1501;" placeholder="分类">
-        <Option v-for="(item, key) in categorys" :value="item.name" :key="key">{{ item.name }}</Option>
-      </Select>
       <Button type="dashed" @click="publish($event, true)">存为草稿</Button>
       <Button type="primary" @click.native="publish">发布</Button>
     </div>
-    <md v-model="articleData.value"></md>
+    <md v-model="value" ref="md"></md>
   </div>
 </template>
 <script>
@@ -20,17 +12,7 @@
   export default {
     data () {
       return {
-        articleData: {
-          value: '',
-          title: '',
-          description: '',
-          tag: '',
-          category: '',
-          mdcont: '',
-          draft: false
-        },
-        tags: [],
-        categorys: [],
+        value: '',
         view: 'add',
         articleId: ''
       }
@@ -46,12 +28,14 @@
     },
     methods: {
       publish ($event, draft) {
+        let articleData = this.$refs.md.getData()
         if (draft) {
-          this.articleData.draft = true
+          articleData.draft = true
         } else {
-          this.articleData.draft = false
+          articleData.draft = false
         }
-        const url = this.view === 'add' ? '/api/article' : '/api/article/' + this.articleId
+        console.log(articleData)
+        const url = this.view === 'add' ? '/api/artcle' : '/api/aticle/' + this.articleId
         const method = this.view === 'add' ? 'post' : 'put'
         this.axios.request({
           url: url,
@@ -61,7 +45,8 @@
         .then(response => {
           this.$Message.success(response.data.data.msg)
         }).catch(error => {
-          if (error.status === 401) {
+          if (error.response.status === 401) {
+            window.localStorage.removeItem('token')
             this.$router.push({path: '/signin'})
           } else {
             this.$Message.error(error.response.data.verror.msg)

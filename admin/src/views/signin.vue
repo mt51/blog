@@ -6,7 +6,7 @@
         登录
       </p>
       <div class="signin-box">
-        <Form ref="signin" :model="formData" :rules="ruleValidate">
+        <Form ref="signin" :model="formData" :rules="ruleValidate" @keyup.enter.native="signin">
           <FormItem prop="account">
             <Input size="large" v-model="formData.account">
               <span slot="prepend"><Icon type="person"></Icon></span>
