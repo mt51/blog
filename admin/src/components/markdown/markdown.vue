@@ -156,7 +156,6 @@
         const result = splitMarkdown(this.value)
         result.htmlcont = this.compileMarkdown
         result.origin = this.value
-        console.log(result)
         return result
       }
     }
@@ -195,6 +194,7 @@
         line-height: 1.5;
         font-size: 16px;
         background: #eee;
+        overflow-y: auto;
       }
     }
     &.full-screen {
