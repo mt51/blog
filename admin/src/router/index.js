@@ -14,6 +14,7 @@ import Tags from '@/views/tags'
 import Themes from '@/views/themes'
 import User from '@/views/user'
 import Dashboard from '@/views/dashboard'
+import Import from '@/views/import'
 
 Vue.use(Router)
 
@@ -91,6 +92,11 @@ export default new Router({
         name: 'edit',
         component: Publish,
         meta: {nickname: '编辑文章'}
+      }, {
+        path: 'import',
+        name: 'import',
+        component: Import,
+        meta: {nickname: '导入文章'}
       }]
     }, {
       path: '/signin',

@@ -87,13 +87,13 @@
     },
     methods: {
       fetchArticleList (page) {
-        this.axios.get('/api/article?&page=' + page)
+        this.axios.get('/api/article?page=' + page)
           .then((response) => {
             if (response.data.code === 0) {
               this.data = response.data.data
               this.total = response.data.total
               this.data.forEach(item => {
-                item.date = formatDate(item.date, 'yyyy-MM-dd')
+                item.date = formatDate(item.date, 'yyyy-MM-dd hh:mm:ss')
               })
             }
           })
@@ -106,6 +106,7 @@
         .then(response => {
           if (response.data.code === 0) {
             this.$Message.success('删除成功')
+            this.fetchArticleList(this.page)
           } else {
             this.$Message.error('删除失败')
           }
