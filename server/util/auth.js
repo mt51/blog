@@ -7,7 +7,7 @@ const generateToken = data => {
 }
 
 const checkAuth = (req, res, next) => {
-  const token = req.header.token;
+  const token = req.headers.token;
   console.log(token)
   if (!token) {
     res.status(401);
@@ -16,7 +16,7 @@ const checkAuth = (req, res, next) => {
       verror: '请先登录'
     })
   }
-  jwt.verify(token, config.secret, (decode, err) => {
+  jwt.verify(token, config.secret, (err, decode) => {
     if (err) {
       res.status(401);
       return res.json({
@@ -34,7 +34,7 @@ const checkAuth = (req, res, next) => {
           verror: '请先登录'
         })
       }
-      res.send(200)
+      next()
     })
     .catch(err => {
       throw new Error(e)
