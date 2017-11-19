@@ -18,7 +18,6 @@
       }
     },
     created () {
-      this.fetchTagsAndCategorys()
       const pathName = this.$route.name
       if (pathName === 'edit') {
         this.articleId = this.$route.params.id
@@ -35,15 +34,16 @@
           articleData.draft = false
         }
         console.log(articleData)
-        const url = this.view === 'add' ? '/api/artcle' : '/api/aticle/' + this.articleId
+        const url = this.view === 'add' ? '/api/article' : '/api/article/' + this.articleId
         const method = this.view === 'add' ? 'post' : 'put'
         this.axios.request({
           url: url,
           method: method,
-          data: this.articleData
+          data: articleData
         })
         .then(response => {
           this.$Message.success(response.data.data.msg)
+          this.value = ''
         }).catch(error => {
           if (error.response.status === 401) {
             window.localStorage.removeItem('token')
@@ -51,13 +51,6 @@
           } else {
             this.$Message.error(error.response.data.verror.msg)
           }
-        })
-      },
-      fetchTagsAndCategorys () {
-        this.axios.get('/api/category')
-        .then(response => {
-          this.tags = response.data.data.tags
-          this.categorys = response.data.data.categorys
         })
       },
       fetchArticleInfo (id) {

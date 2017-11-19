@@ -14,6 +14,7 @@
         </template>
         <MenuItem name="article">文章列表</MenuItem>
         <MenuItem name="publish">文章添加</MenuItem>
+        <!-- <MenuItem name="import">文章导入</MenuItem> -->
       </Submenu>
       <!-- <Submenu name="pages">
         <template slot="title">
