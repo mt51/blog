@@ -51,6 +51,7 @@ router.get('/', (req, res, next) => {
   })
 })
 
+/* 根据id获取文章 */
 router.get('/:id', (req, res, next) => {
   const articleId = req.params.id;
   ArticleModel
@@ -95,7 +96,9 @@ router.post('/', jwt.checkAuth, (req, res, next) => {
     res.status(200);
     res.json({
       code: 0,
-      msg: '保存成功'
+      data: {
+        msg: '保存成功'
+      }
     })
   }).catch(e => {
     throw new Error(e);

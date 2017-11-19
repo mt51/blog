@@ -4,7 +4,7 @@ const ArticleSchema = new Schema({
   title: String,
   mdcont: String,
   htmlcont: String,
-  tag: String,
+  tags: String,
   category: String,
   date: Date,
   picurl: String,
