@@ -1,0 +1,27 @@
+<div class="left" [class.show]="leftVisible">
+  <div class="info">
+    <div class="avatar">
+      <img src="//ofl49b399.bkt.clouddn.com/1.jpg" alt="头像">
+      <div class="menubar" (click)="collaspeLeftBar()">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </div>
+    <div class="email">
+      <p>798230885@qq.com</p>
+    </div>
+  </div>
+  <ul class="nav">
+    <li class="nav-item"><a routerLinkActive="active" routerLink="/index"><i class="fa fa-home"></i>主页</a></li>
+    <li class="nav-item"><i class="fa fa-tags"></i>归档<i class="fr fa fa-caret-down"></i>
+      <ul></ul>
+    </li>
+    <li class="nav-item"><i class="fa fa-map-o"></i>分类<i class="fr fa fa-caret-down"></i>
+      <ul></ul>
+    </li>
+    <li class="nav-item"><a routerLinkActive="active" routerLink="/index"><i class="fa fa-user-o"></i>关于我</a></li>
+    <li class="nav-item">友链</li>
+  </ul>
+</div>
+<div class="mask" [class.visible]="leftVisible"></div>

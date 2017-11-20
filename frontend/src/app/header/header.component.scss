@@ -1,0 +1,81 @@
+.header {
+  .menu-bar {
+    width: 20px;
+    height: 20px;
+    color: #222;
+    padding: 10px;
+    cursor: pointer;
+  }
+  .header-info {
+    width: 1024px;
+    margin: 0 auto;
+    height: 300px;
+    display: flex;
+    justify-content: space-between;
+    .assign {
+      position: relative;
+      flex: 1;
+      background: url(/assets/images/daily_pic.png);
+      background-size: cover;
+      margin-right: 20px;
+      .assign-text {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        font-size: 24px;
+        color: #fff;
+      }
+    }
+    .info {
+      width: 260px;
+      box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+      position: relative;
+      .search {
+        position: absolute;
+        top: -25px;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        input{
+          flex: 1;
+          padding-left: 5px;
+          height: 25px;
+          line-height: 25px;
+          border-bottom: 1px solid #ccc;
+          &:focus{
+            border-bottom: 2px solid #0097A7;
+          }
+        }
+        .icon {
+          display:inline-block;
+          width: 50px;
+          height: 50px;
+          line-height: 50px;
+          text-align: center;
+          background: #0097A7;
+          color: #fff;
+          font-size: 20px;
+          border-radius: 50%;
+        }
+      }
+      .avatar {
+        width: 120px;
+        height: 120px;
+        margin: 60px auto;
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
+      }
+      .title {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        height: 30px;
+        line-height: 30px;
+        color: #757575;
+      }
+    }
+  }
+}
