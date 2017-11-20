@@ -9,6 +9,8 @@ export class ArticleListComponent implements OnInit {
 
   constructor() { }
 
+  artilceList: object[] = [{id: 1}, {id: 2}, {id: 3}, {id: 4}, {id: 5}]
+
   ngOnInit() {
   }
 
