@@ -1,10 +1,10 @@
 <ul class="article-list">
   <li class="item" *ngFor="let item of artilceList">
-    <div class="item-title">
+    <div class="item-title" routerLink="{{'/article/' + item.id}}">
       
     </div>
     <div class="descp">
-      <p>这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述<a href="#" class="more">阅读全文</a></p>
+      <p>这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述...<a href="javascript:void(0)" routerLink="{{'/article/' + item.id}}" class="more">阅读全文</a></p>
     </div>
     <div class="author">
       <div class="info">

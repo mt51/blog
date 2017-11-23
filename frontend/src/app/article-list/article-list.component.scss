@@ -8,10 +8,13 @@
   .item-title {
     background: #00907a;
     height: 224px;
+    cursor: pointer;
   }
   .descp {
     margin: 20px 0;
     padding: 0 15px;
+    line-height: 1.5;
+    text-indent: 2em;
     .more {
       margin-left: 10px;
       color: #00838f;
