@@ -11,7 +11,7 @@
           <MenuItem name="5-1">网络图片</MenuItem>
           <MenuItem name="5-2">上传图片</MenuItem>
         </Submenu>
-        <MenuItem name="6">摘要</MenuItem>
+        <!-- <MenuItem name="6">摘要</MenuItem> -->
         <MenuItem name="7">预览</MenuItem>
         <MenuItem name="8">全屏</MenuItem>
       </Menu>
@@ -34,7 +34,7 @@
   </div>
 </template>
 <script>
-  import { marked, splitMarkdown } from '@/util/marked'
+  import { marked } from '@/util/marked'
   const BASE_URL = '//ozft0883x.bkt.clouddn.com/'
   export default {
     name: 'markdown',
@@ -53,9 +53,7 @@
     props: ['value'],
     computed: {
       compileMarkdown () {
-        const result = splitMarkdown(this.value)
-        console.log(result)
-        return marked(result.mdcont)
+        return marked(this.value)
       }
     },
     methods: {
@@ -95,9 +93,9 @@
       codeText () {
         this.preInputText('```\n\tcode block\n```', 4, 15)
       },
-      insertMore () {
-        this.preInputText('<!--more-->', 12, 12)
-      },
+      // insertMore () {
+      //   this.preInputText('<!--more-->', 12, 12)
+      // },
       handleSelect (key) {
         switch (key) {
           case '1': {
@@ -124,10 +122,10 @@
             this.modalVisible = true
             break
           }
-          case '6': {
-            this.insertMore()
-            break
-          }
+          // case '6': {
+          //   this.insertMore()
+          //   break
+          // }
           case '7': {
             this.preview = !this.preview
             break
@@ -152,11 +150,8 @@
         this.pathModel = true
         this.path = `![图片](${BASE_URL}${response.key})`
       },
-      getData () {
-        const result = splitMarkdown(this.value)
-        result.htmlcont = this.compileMarkdown
-        result.origin = this.value
-        return result
+      getHtmlcont () {
+        return this.compileMarkdown
       }
     }
   }

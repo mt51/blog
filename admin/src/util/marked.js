@@ -24,7 +24,7 @@ export const splitMarkdown = md => {
     title = getBykey('title', result[1])
     tags = getBykey('tags', result[1])
     category = getBykey('category', result[1])
-    mdcont = md.replace(result[0], `###${title}`)
+    mdcont = md.replace(result[0], `### ${title}`)
     if (mdcont) {
       description = getDescription(mdcont, title)
     }
@@ -39,22 +39,20 @@ export const splitMarkdown = md => {
 }
 
 function getBykey (key, str) {
-  str = str.replace(/^\s/, '')
-  const reg = new RegExp(`^\\s+|${key}:([^\\n]+)`)
+  str = str.replace(/(^\s*)|(\s*$)/g, '')
+  const reg = new RegExp(`${key}:([^\\r\\n]+)`)
   const result = str.match(reg)
-  if (result && result[1]) {
-    const resultReg = new RegExp(`${key}[:：]`)
-    return result[1].replace(resultReg, '')
+  if (result && result[2]) {
+    return result[2].replace(/(^\s*)|(\s*$)/g, '')
   } else {
     return ''
   }
 }
 
 const getDescription = (md, title) => {
-  md = md.replace(`###${title}`, '')
+  md = md.replace(`### ${title}`, '')
   const mdcont = md.split('<!-- more -->')
   if (md.length > 1) {
-    console.log(mdcont[0])
     return mdcont[0].replace(/^[\s]|[\s$]/g, '')
   } else {
     return null
