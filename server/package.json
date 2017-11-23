@@ -12,6 +12,7 @@
     "cors": "^2.8.4",
     "debug": "~2.6.9",
     "express": "~4.15.5",
+    "highlight.js": "^9.12.0",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.1.0",
     "marked": "^0.3.6",
