@@ -90,7 +90,7 @@ router.get('/:id', (req, res, next) => {
 router.post('/', jwt.checkAuth, (req, res, next) => {
   const articleData = req.body;
   articleData.date = new Date().getTime();
-  articleData.author = "刘子洋";
+  articleData.author = "胖先森";
   const newArticle = new ArticleModel(articleData);
   newArticle.save().then(() =>{
     res.status(200);
