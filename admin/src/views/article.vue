@@ -1,7 +1,7 @@
 <template>
   <div class="article">
     <Table :loading="loading" :columns="columns" :data="data" stripe></Table>
-    <Page :total="total" on-change="fetchArticleList" class-name="page"></Page>
+    <Page :total="total" @on-change="fetchArticleList" class-name="page"></Page>
   </div>
 </template>
 <script>
@@ -25,7 +25,7 @@
             ellipsis: true
           }, {
             title: '标签',
-            key: 'tag',
+            key: 'tags',
             ellipsis: true
           }, {
             title: '作者',
@@ -99,7 +99,8 @@
           })
       },
       edit (p) {
-        this.$router.replace({path: 'edit', params: {id: p.row['_id']}})
+        console.log(p.row['_id'])
+        this.$router.replace({name: 'edit', params: {id: p.row['_id']}})
       },
       deleteArticle () {
         this.axios.delete('/api/article/' + this.currentArticleId)
