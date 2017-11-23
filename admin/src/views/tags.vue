@@ -129,13 +129,15 @@
                 this.$refs.tag.resetFields()
               }
             })
-            .catch(e => {
-              if (e.response.data) {
-                this.$Message.error(e.response.data.verror.msg)
-                this.fomrLoading = false
-                this.$nextTick(() => {
-                  this.fomrLoading = true
-                })
+            .catch(error => {
+              if (error.response.status === 401) {
+                this.$Message.error('请先登录')
+                window.localStorage.removeItem('token')
+                setTimeout(() => {
+                  this.$router.push({path: '/signin'})
+                }, 1500)
+              } else {
+                this.$Message.error(error.response.data.verror.msg)
               }
             })
           } else {
