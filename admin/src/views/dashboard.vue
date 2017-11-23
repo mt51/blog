@@ -40,7 +40,8 @@
     .home-container{
       height: 100%;
       .layout-content{
-        min-height: calc(100vh - 160px);
+        height: calc(100vh - 140px);
+        overflow: auto;
       }
       .layout-footer {
         height: 60px;
