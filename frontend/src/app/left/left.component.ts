@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-left',
@@ -9,10 +9,11 @@ export class LeftComponent implements OnInit {
 
   constructor() { }
 
-  leftVisible: boolean = false
+  @Input() leftVisible: boolean
+  @Output() onVisible = new EventEmitter<boolean>();
 
   collaspeLeftBar () {
-    this.leftVisible = false
+    this.onVisible.emit(false)
   }
 
   ngOnInit() {
