@@ -1,3 +1,5 @@
 <div class="app">
+  <app-left [leftVisible]="leftVisible" (onVisible)="handleVisible()"></app-left>
+  <div class="menu-bar" (click)="handleCollapse()"><i class="fa fa-bars"></i></div>
   <router-outlet></router-outlet>
 </div>

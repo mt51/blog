@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  leftVisible: boolean = false;
+  handleCollapse () {
+    this.leftVisible = true;
+  };
+  handleVisible (visible: boolean) {
+    this.leftVisible = visible;
+  }
 }

@@ -13,6 +13,7 @@ import { LinkComponent } from './link/link.component';
 
 import { AppRouterModule } from './app-routing.module';
 import { HeaderComponent } from './header/header.component';
+import { PageComponent } from './page/page.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { HeaderComponent } from './header/header.component';
     ArticleListComponent,
     AboutComponent,
     LinkComponent,
-    HeaderComponent
+    HeaderComponent,
+    PageComponent
   ],
   imports: [
     BrowserModule,
