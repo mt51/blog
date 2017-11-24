@@ -43,4 +43,4 @@ a,button{cursor:pointer;}
 del,ins,u,a,a:hover{text-decoration:none; color:#666666}
 body,textarea,input,select,keygen,legend{font:100%/1.125em arial;color:#666;outline:0;-webkit-text-size-adjust: none; }
 html, body{height: 100%;}
-[v-cloak] {display: none;}
+body{background: #F5F5F5;}
