@@ -9,6 +9,7 @@ export class IndexComponent implements OnInit {
 
   constructor() { }
 
+  leftVisible = false
   ngOnInit() {
   }
 }
