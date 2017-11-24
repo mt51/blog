@@ -10,7 +10,7 @@ import { LinkComponent } from './link/link.component';
 const routes: Routes = [
   {path: '', redirectTo: '/index', pathMatch: 'full'},
   {path: 'index', component: IndexComponent},
-  {path: 'articles', component: ArticleListComponent},
+  {path: 'articles/pages/:page', component: ArticleListComponent},
   {path: 'article/:id', component: ArticleComponent},
   {path: 'about', component: AboutComponent},
   {path: 'links', component: LinkComponent},
