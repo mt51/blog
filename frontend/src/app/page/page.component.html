@@ -1,0 +1,7 @@
+<ul class="pagination">
+  <li class="prev"><i class="fa-chevron-left"></i></li>
+  <li *ngFor="let page of pages" [class.active]="page === currentPage" routerLink="{{'/articles/pages/' + page}}">
+    <a>{{page}}</a>
+  </li>
+  <li class="next"><i class="fa-chevron-right"></i></li>
+</ul>
