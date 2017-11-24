@@ -1,3 +1,16 @@
-<p>
-  article works!
-</p>
+<div class="article">
+  <div class="article-title">
+      <p>{{articleInfo.title}}</p>
+    </div>
+    <div class="author">
+      <div class="info">
+        <img src="//ofl49b399.bkt.clouddn.com/1.jpg" alt="头像">
+        <div>
+          <h4>{{articleInfo.author}}</h4>
+          <p class="date">4月08，2017</p>
+        </div>
+      </div>
+      <div class="category"><a href="#">{{articleInfo.category}}</a></div>
+    </div>
+    <div class="article-content markdown-body" [innerHTML]="articleInfo.htmlcont"></div>
+</div>
