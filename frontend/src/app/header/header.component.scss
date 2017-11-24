@@ -1,11 +1,5 @@
 .header {
-  .menu-bar {
-    width: 20px;
-    height: 20px;
-    color: #222;
-    padding: 10px;
-    cursor: pointer;
-  }
+  margin-top: 20px;
   .header-info {
     width: 1024px;
     margin: 0 auto;
@@ -42,8 +36,8 @@
           height: 25px;
           line-height: 25px;
           border-bottom: 1px solid #ccc;
-          &:focus{
-            border-bottom: 2px solid #0097A7;
+          &:focus + .input-line{
+            width: 175px;
           }
         }
         .icon {
@@ -57,6 +51,14 @@
           font-size: 20px;
           border-radius: 50%;
         }
+      }
+      .input-line{
+        position: absolute;
+        bottom: 24px;
+        right: 70px;
+        width: 0;
+        transition: width 0.5s;
+        border-bottom: 2px solid #0097A7;
       }
       .avatar {
         width: 120px;
@@ -74,6 +76,20 @@
         line-height: 60px;
         color: #757575;
         border-top: 1px solid #ccc;
+      }
+    }
+  }
+}
+@media screen and (max-width: 1024px) {
+  .header {
+    margin-top: 0;
+    .header-info {
+      height: 60px;
+      .info {
+        display: none;
+      }
+      .assign {
+        background-size: contain;
       }
     }
   }
