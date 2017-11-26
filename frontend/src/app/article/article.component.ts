@@ -11,7 +11,9 @@ import { ArticleService } from './article.service'
 })
 export class ArticleComponent implements OnInit {
 
-  articleInfo: object = {}
+  articleInfo: object = {
+    title: ''
+  }
   constructor(
     private article: ArticleService,
     private router: ActivatedRoute
@@ -23,6 +25,7 @@ export class ArticleComponent implements OnInit {
       .then(response => {
         if (response.body.code === 0) {
           this.articleInfo = response.body.data
+          console.log(response)
         }
       })
   }
