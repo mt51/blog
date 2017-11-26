@@ -14,6 +14,8 @@ import { LinkComponent } from './link/link.component';
 import { AppRouterModule } from './app-routing.module';
 import { HeaderComponent } from './header/header.component';
 import { PageComponent } from './page/page.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { CategoriesComponent } from './categories/categories.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { PageComponent } from './page/page.component';
     AboutComponent,
     LinkComponent,
     HeaderComponent,
-    PageComponent
+    PageComponent,
+    NotFoundComponent,
+    CategoriesComponent
   ],
   imports: [
     BrowserModule,
