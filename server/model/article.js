@@ -17,7 +17,7 @@ const ArticleSchema = new Schema({
 
 ArticleSchema.statics = {
   getCategory () {
-    return Category.find({type: 'category'}).exec();
+    return Category.find({type: 'category'}, 'name').exec();
   }
 }
 

@@ -167,7 +167,25 @@ router.delete('/:id', jwt.checkAuth, (req, res, next) => {
 router.get('/categories', (req, res, next) => {
   ArticleModel.getCategory()
    .then(data => {
-    console.log('category', data)
+    let promise = getCategoryData(data);
+    Promise.all(promise)
+    .then(result => {
+      res.status(200)
+      res.json({
+        code: 0,
+        data: result[0]
+      })
+    })
+    .catch(error => {
+      throw new Error(error)
+      res.status(500)
+      res.json({
+        code: 5,
+        verror: {
+          msg: 'Something error'
+        }
+      })
+     })
    })
    .catch(error => {
     throw new Error(error)
@@ -180,5 +198,21 @@ router.get('/categories', (req, res, next) => {
     })
    })
 })
+
+function getCategoryData (data) {
+  let promises = []
+  let tempData = []
+  data.forEach(item => {
+    const promise = ArticleModel.count({category: item.name}).then(count => {
+      tempData.push({
+        name: item.name,
+        count
+      });
+      return tempData;
+    })
+    promises.push(promise)
+  })
+  return promises;
+}
 
 module.exports = router;
