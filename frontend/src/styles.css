@@ -20,7 +20,7 @@
 /* End hide from IE-mac */
 
 /* reset */
-html,body,h1,h2,h3,h4,h5,h6,div,dl,dt,dd,ul,ol,li,p,blockquote,pre,hr,figure,table,caption,th,td,form,fieldset,legend,input,button,textarea,menu{margin:0;padding:0; font-family: Arial,"微软雅黑"!important; color: inherit;
+html,body,h1,h2,h3,h4,h5,h6,div,dl,dt,dd,ul,ol,li,p,blockquote,pre,hr,figure,table,caption,th,td,form,fieldset,legend,input,button,textarea,menu{margin:0;padding:0; color: inherit;
     vertical-align: baseline;
     font-size:14px;
 }
@@ -43,4 +43,4 @@ a,button{cursor:pointer;}
 del,ins,u,a,a:hover{text-decoration:none; color:#666666}
 body,textarea,input,select,keygen,legend{font:100%/1.125em arial;color:#666;outline:0;-webkit-text-size-adjust: none; }
 html, body{height: 100%;}
-body{background: #F5F5F5;}
+body{background: #F5F5F5;font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif}
