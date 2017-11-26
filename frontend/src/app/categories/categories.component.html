@@ -1,0 +1,25 @@
+<app-header></app-header>
+<ul class="article-list">
+  <li class="item" *ngFor="let item of artilceList">
+    <div class="item-title" routerLink="{{'/article/' + item['_id']}}">
+      <p>{{item.title}}</p>
+    </div>
+    <div class="descp">
+      <p>这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述这里是描述...<a href="javascript:void(0)" routerLink="{{'/article/' + item['_id']}}" class="more">阅读全文</a></p>
+    </div>
+    <div class="author">
+      <div class="info">
+        <img src="//ofl49b399.bkt.clouddn.com/1.jpg" alt="头像">
+        <div>
+          <h4>{{item.author}}</h4>
+          <p class="date">4月08，2017</p>
+        </div>
+      </div>
+      <div class="category"><a href="{{'/categories/' + item.category}}">{{item.category}}</a></div>
+    </div>
+  </li>
+</ul>
+<div class="load-more">
+  <button (click)="loadMore()" *ngIf="more && total !== 0">加载更多</button>
+  <button *ngIf="!more || total === 0">暂无更多</button>
+</div>
