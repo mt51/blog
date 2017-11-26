@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ArticlesListService } from './article-list.service';
 
@@ -14,22 +14,37 @@ export class ArticleListComponent implements OnInit {
 
   constructor(
     private article: ArticlesListService,
-    private router: ActivatedRoute
+    private activeRouter: ActivatedRoute,
+    private router: Router
   ) { }
 
   artilceList: object[] = []
+  currentPage: number = 1
+  total: number = 0
+  flag: boolean = true
+  more: boolean = true
 
   ngOnInit() {
-    const page = this.router.snapshot.params.page || 1
-    this.article.fetchArtlclesList({page: page})
-      .then(response => {
-        if (response.body.code === 0) {
-          this.artilceList = response.body.data
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    this.fetchArticleData();
   }
-
+  fetchArticleData () {
+    if (!this.flag) return
+    this.article.fetchArtlclesList({page: this.currentPage})
+    .then(response => {
+      if (response.body.code === 0) {
+        this.flag = true
+        this.artilceList = this.artilceList.concat(response.body.data)
+        this.total = response.body.total
+        this.more = Math.ceil(this.total/10) !== this.currentPage
+      }
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  }
+  loadMore () {
+    this.currentPage++
+    this.fetchArticleData()
+    this.flag = false
+  }
 }

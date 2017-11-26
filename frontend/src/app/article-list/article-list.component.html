@@ -1,3 +1,4 @@
+<app-header></app-header>
 <ul class="article-list">
   <li class="item" *ngFor="let item of artilceList">
     <div class="item-title" routerLink="{{'/article/' + item['_id']}}">
@@ -14,10 +15,11 @@
           <p class="date">4月08，2017</p>
         </div>
       </div>
-      <div class="category"><a href="#">{{item.category}}</a></div>
+      <div class="category"><a href="{{'/categories/' + item.category}}">{{item.category}}</a></div>
     </div>
   </li>
 </ul>
-<div class="pages">
-  <app-page></app-page>
+<div class="load-more">
+  <button (click)="loadMore()" *ngIf="more && total !== 0">加载更多</button>
+  <button *ngIf="!more || total === 0">暂无更多</button>
 </div>

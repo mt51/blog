@@ -59,11 +59,16 @@
     }
   }
 }
-.pages {
+.load-more {
   width: 1024px;
   margin: 0 auto 60px;
-  display: flex;
-  justify-content: flex-end;
+  text-align: center;
+  color: #00707f;
+  cousor: pointer;
+  &:hover button {
+    text-decoration: underline;
+    color: #00838F;
+  }
 }
 @media screen and (max-width: 1024px) {
   .article-list {
@@ -76,7 +81,7 @@
       }
     }
   }
-  .pages{
+  .load-more{
     width: 100%;
   }
 }
