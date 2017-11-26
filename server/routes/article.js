@@ -32,7 +32,7 @@ router.get('/', (req, res, next) => {
         code: 0,
         data: tempData,
         total: count,
-        page: page
+        page: page - 0
       })
     })
     .catch((e) => {
@@ -57,7 +57,6 @@ router.get('/:id', (req, res, next) => {
   ArticleModel
   .findOne({'_id': articleId})
   .then(data => {
-    console.log('文章数据： ', data)
     if (!data) {
       res.status(400);
       res.json({
@@ -204,7 +203,6 @@ router.delete('/:id', jwt.checkAuth, (req, res, next) => {
     })
   })
 })
-
 
 
 module.exports = router;

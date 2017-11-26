@@ -10,6 +10,7 @@ const category = require('./category.js');
 const user = require('./user.js');
 const log = require('./log.js');
 const impor = require('./import.js');
+const sort = require('./sort.js');
 
 router.use('/signin', signin);
 router.use('/article', article);
@@ -20,5 +21,6 @@ router.use('/category', category);
 router.use('/user', user);
 router.use('/log', log);
 router.use('/import', impor);
+router.use('/sort', sort);
 
 module.exports = router;

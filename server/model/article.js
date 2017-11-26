@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Category = require('./category.js');
 const Schema = mongoose.Schema;
 const ArticleSchema = new Schema({
   title: String,
@@ -13,5 +14,11 @@ const ArticleSchema = new Schema({
   draft: Boolean,
   origin: String
 })
+
+ArticleSchema.statics = {
+  getCategory () {
+    return Category.find({type: 'category'}).exec();
+  }
+}
 
 module.exports = mongoose.model('article', ArticleSchema);

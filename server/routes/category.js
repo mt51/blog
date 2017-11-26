@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const CategoryModel = require('../model/category');
+const ArticleModel = require('../model/article.js');
 const jwt = require('../util/auth.js');
 
 router.get('/', (req, res, next) => {
@@ -159,6 +160,25 @@ router.delete('/:id', jwt.checkAuth, (req, res, next) => {
       }
     })
   })
+})
+
+// 将文章进行分类
+
+router.get('/categories', (req, res, next) => {
+  ArticleModel.getCategory()
+   .then(data => {
+    console.log('category', data)
+   })
+   .catch(error => {
+    throw new Error(error)
+    res.status(500)
+    res.json({
+      code: 5,
+      verror: {
+        msg: 'Something error'
+      }
+    })
+   })
 })
 
 module.exports = router;
