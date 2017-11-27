@@ -7,6 +7,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  font-size: 24px;
 }
 @media screen and (max-width: 1024px) {
   .menu-bar {

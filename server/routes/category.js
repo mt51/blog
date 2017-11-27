@@ -164,7 +164,7 @@ router.delete('/:id', jwt.checkAuth, (req, res, next) => {
 
 // 将文章进行分类
 
-router.get('/categories', (req, res, next) => {
+router.get('/info', (req, res, next) => {
   ArticleModel.getCategory()
    .then(data => {
     let promise = getCategoryData(data);

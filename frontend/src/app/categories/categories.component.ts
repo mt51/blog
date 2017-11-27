@@ -17,11 +17,12 @@ export class CategoriesComponent implements OnInit {
     private router: Router
   ) { }
 
-  artilceList: object[] = []
-  currentPage: number = 1
-  total: number = 0
-  flag: boolean = true
-  more: boolean = true
+  private artilceList: object[] = []
+  private currentPage: number = 1
+  private total: number = 0
+  private flag: boolean = true
+  private more: boolean = true
+  private category: string
 
   ngOnInit() {
     this.fetchArticleData();
@@ -29,8 +30,11 @@ export class CategoriesComponent implements OnInit {
   fetchArticleData () {
     if (!this.flag) return
     this.activeRouter.params.subscribe(r => {
-      const category = r.category
-      this.article.fetchArtlclesList({page: this.currentPage}, category)
+      if (this.category !== r.category) {
+        this.artilceList = []
+      }
+      this.category = r.category
+      this.article.fetchArtlclesList({page: this.currentPage}, this.category)
       .then(response => {
         if (response.body.code === 0) {
           this.flag = true
