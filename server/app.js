@@ -12,6 +12,9 @@ const config = require('./config.js');
 
 var routes = require('./routes/index');
 
+const admin = require('./routes/admin');
+const front = require('./routes/front');
+
 var app = express();
 
 
@@ -37,10 +40,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'views/admin')));
+app.use(express.static(path.join(__dirname, 'views/front')));
 
 app.use(cors());
 
 app.use('/api', routes);
+
+app.use('/admin', admin)
+
+app.use('/front', front)
 
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -76,7 +85,8 @@ app.use(function(err, req, res, next) {
 
 /* 数据库连接 */
 
-mongoose.connect(config.databaseUrl);
+
+mongoose.connect(config.databaseUrl, {user: '123', pass: '321'});
 
 const db = mongoose.connection;
 db.on('open', () => {
