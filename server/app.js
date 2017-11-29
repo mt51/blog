@@ -43,23 +43,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'views/admin')));
 app.use(express.static(path.join(__dirname, 'views/front')));
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use('/api', routes);
 
 app.use('/admin', admin)
 
-app.use('/front', front)
-
-app.all('*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-    res.header("X-Powered-By",' 3.2.1')
-    res.header("Content-Type", "application/json;charset=utf-8");
-    next();
-});
-
+app.use('/index', front)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -86,7 +76,7 @@ app.use(function(err, req, res, next) {
 /* 数据库连接 */
 
 
-mongoose.connect(config.databaseUrl, {user: '123', pass: '321'});
+mongoose.connect(config.databaseUrl, {user: '123', pass: '123'});
 
 const db = mongoose.connection;
 db.on('open', () => {
