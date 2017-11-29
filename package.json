@@ -1,0 +1,21 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitee.com:liuziyangg/blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2"
+  },
+  "dependencies": {}
+}
