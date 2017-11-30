@@ -13,7 +13,6 @@ const config = require('./config.js');
 var routes = require('./routes/index');
 
 const admin = require('./routes/admin');
-const front = require('./routes/front');
 
 var app = express();
 

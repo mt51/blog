@@ -14,7 +14,6 @@ const sort = require('./sort.js');
 
 router.use('/signin', signin);
 router.use('/article', article);
-// router.use('/signout', signout);
 router.use('/signup', signup);
 router.use('/qiniu', qiniu);
 router.use('/category', category);
