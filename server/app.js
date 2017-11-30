@@ -20,6 +20,7 @@ var app = express();
 
 const corsOptions = {
   origin: function(origin, callback){
+    console.log('origin', origin)
     if (config.whitelist.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
@@ -40,16 +41,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'views/admin')));
+
 app.use(express.static(path.join(__dirname, 'views/front')));
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 app.use('/api', routes);
 
 app.use('/admin', admin)
 
-app.use('/index', front)
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -76,7 +77,9 @@ app.use(function(err, req, res, next) {
 /* 数据库连接 */
 
 
-mongoose.connect(config.databaseUrl, {user: '123', pass: '123'});
+// mongoose.connect(config.databaseUrl, {user: '123', pass: '123'});
+
+mongoose.connect(config.databaseUrl);
 
 const db = mongoose.connection;
 db.on('open', () => {
