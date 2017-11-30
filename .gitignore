@@ -20,3 +20,4 @@ server/uploads/
 server/views/admin/index.html
 server/views/admin/
 server/views/front/
+server/public/
