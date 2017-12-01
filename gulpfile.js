@@ -1,7 +1,14 @@
 var gulp = require('gulp');
 var clean = require('gulp-clean');
 
-gulp.task('default', ['admin', 'front', 'static']);
+gulp.task('default', ['clean'], function(){
+  gulp.start('admin', 'front', 'static')
+});
+
+gulp.task('clean', function () {
+  return gulp.src(['server/views/front', 'server/public/static', 'server/views/admin', 'frontend/dist/favicon.ico'])
+  .pipe(clean())
+})
 
 gulp.task('admin', function(){
   return gulp.src('admin/dist/index.html')
