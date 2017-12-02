@@ -1,7 +1,7 @@
 <template>
   <div class="article">
     <Table :loading="loading" :columns="columns" :data="data" stripe></Table>
-    <Page :total="total" @on-change="fetchArticleList" class-name="page"></Page>
+    <Page :total="total" @on-change="handlePageChange" class-name="page"></Page>
   </div>
 </template>
 <script>
@@ -79,15 +79,22 @@
         total: 0,
         currentArticleId: '',
         tags: [],
-        category: []
+        category: [],
+        currentPage: 1
       }
     },
     created () {
       this.fetchArticleList(1)
     },
     methods: {
+      handlePageChange (page) {
+        if (page !== 1) {
+          this.currentPage = page
+          this.fetchArticleList(page)
+        }
+      },
       fetchArticleList (page) {
-        this.axios.get('/api/article?page=' + page)
+        this.axios.get('/api/article?page=' + page + '&size=15')
           .then((response) => {
             if (response.data.code === 0) {
               this.data = response.data.data
@@ -107,7 +114,7 @@
         .then(response => {
           if (response.data.code === 0) {
             this.$Message.success('删除成功')
-            this.fetchArticleList(this.page)
+            this.fetchArticleList(this.currentPage)
           } else {
             this.$Message.error('删除失败')
           }
