@@ -7,6 +7,7 @@ const jwt = require('../util/auth.js');
 /* 获取文章列表 */
 router.get('/', (req, res, next) => {
   const page = req.query.page || 1;
+  const size = parseInt(req.query.size || 10);
   const type  = req.query.type;
   let search = {
     draft: false
@@ -16,8 +17,8 @@ router.get('/', (req, res, next) => {
   }
   ArticleModel
   .find(search)
-  .skip((page - 1) * 10)
-  .limit(10)
+  .skip((page - 1) * size)
+  .limit(size)
   .sort('-date')
   .exec()
   .then(data => {
@@ -25,6 +26,7 @@ router.get('/', (req, res, next) => {
     tempData.forEach((item) => {
       item.date = new Date(item.date).getTime();
       delete item.mdcont
+      delete item.htmlcont
     })
     ArticleModel.count().then((count) => {
       res.status(200);
