@@ -50,7 +50,6 @@
         }
         this.articleData.htmlcont = this.$refs.md.getHtmlcont()
         this.articleData.tags = this.articleData.tags.length > 0 ? '' : this.articleData.tags.join(',')
-        console.log(this.articleData)
         const url = this.view === 'add' ? '/api/article' : '/api/article/' + this.articleId
         const method = this.view === 'add' ? 'post' : 'put'
         this.axios.request({

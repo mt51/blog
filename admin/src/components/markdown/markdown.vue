@@ -115,7 +115,6 @@
             break
           }
           case '5-1': {
-            console.log('链接')
             break
           }
           case '5-2': {

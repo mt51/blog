@@ -106,7 +106,6 @@
           })
       },
       edit (p) {
-        console.log(p.row['_id'])
         this.$router.replace({name: 'edit', params: {id: p.row['_id']}})
       },
       deleteArticle () {

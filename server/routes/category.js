@@ -91,7 +91,6 @@ router.put('/:id', jwt.checkAuth, (req, res, next) => {
       })
       return;
     }
-    console.log(categoryData)
     CategoryModel
     .update({'_id': categoryId}, {$set: categoryData})
     .then(() => {

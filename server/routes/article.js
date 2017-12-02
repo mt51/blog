@@ -167,11 +167,9 @@ router.put('/:id', jwt.checkAuth, (req, res, next) => {
 /*删除文章*/
 router.delete('/:id', jwt.checkAuth, (req, res, next) => {
   const articleId = req.params.id;
-  console.log(articleId)
   ArticleModel
   .findOne({'_id': articleId})
   .then((article) => {
-    console.log(article)
     if (!article) {
       res.status('400');
       res.json({

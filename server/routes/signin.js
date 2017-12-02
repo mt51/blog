@@ -116,7 +116,6 @@ const saveLog = (req, account) => {
   .sort('-date')
   .exec()
   .then(log => {
-    console.log(log)
     if (log) {
       UserModel
       .update({account: account}, {$set: {lastTime: log.date, lastIp: log.ip}})
