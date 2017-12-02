@@ -32,6 +32,9 @@ export class ArticleListComponent implements OnInit {
     this.article.fetchArtlclesList({page: this.currentPage})
     .then(response => {
       if (response.body.code === 0) {
+        response.body.data.forEach(item => {
+          item.randomBgClass = this.randomBgClass();
+        })
         this.flag = true
         this.artilceList = this.artilceList.concat(response.body.data)
         this.total = response.body.total
@@ -41,6 +44,9 @@ export class ArticleListComponent implements OnInit {
     .catch(error => {
       console.log(error)
     })
+  }
+  randomBgClass () {
+    return 'item-title random_' + Math.ceil(Math.random() * 19);
   }
   loadMore () {
     this.currentPage++

@@ -62,6 +62,12 @@
         font-size: 20px;
       }
     }
+    .expand{
+      padding-bottom: 0;
+      .item-list {
+        margin-top: 20px;
+      }
+    }
     .item-list {
       overflow: hidden;
       background: #e0e0e0;

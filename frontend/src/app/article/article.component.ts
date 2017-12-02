@@ -14,12 +14,15 @@ export class ArticleComponent implements OnInit {
   articleInfo: object = {
     title: ''
   }
+  private randomBgClass: string
+
   constructor(
     private article: ArticleService,
     private router: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.randomBgClass = 'article-title random_' + Math.ceil(Math.random() * 19);
     const articleId = this.router.snapshot.params.id
     this.article.fetchArticleDetail(articleId)
       .then(response => {

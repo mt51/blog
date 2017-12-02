@@ -22,7 +22,7 @@
       <i class="fa fa-tags"></i>归档<i class="fr fa fa-caret-down"></i>
       <ul></ul>
     </li> -->
-    <li class="nav-item" (click)="toggleActive()" [class.active]="active">
+    <li class="nav-item expand" (click)="toggleActive()" [class.active]="active">
       <i class="fa fa-map-o" style="padding-left: 20px;"></i>分类<i class="fr fa fa-caret-down"></i>
       <ul class="item-list" [@listState]="listState">
         <li *ngFor="let item of categoryInfo" routerLink="{{'/categories/' + item.name}}" (click)="collaspeLeftBar()">
