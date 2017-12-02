@@ -17,12 +17,12 @@ export class CategoriesComponent implements OnInit {
     private router: Router
   ) { }
 
-  private artilceList: object[] = []
-  private currentPage: number = 1
-  private total: number = 0
-  private flag: boolean = true
-  private more: boolean = true
-  private category: string
+  artilceList: object[] = []
+  currentPage: number = 1
+  total: number = 0
+  flag: boolean = true
+  more: boolean = true
+  category: string
 
   ngOnInit() {
     this.fetchArticleData();

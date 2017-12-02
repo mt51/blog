@@ -10,7 +10,7 @@ export class AppComponent {
   handleCollapse () {
     this.leftVisible = true;
   };
-  handleVisible (visible: boolean) {
+  handleVisible (visible: boolean = false) {
     this.leftVisible = visible;
   }
 }

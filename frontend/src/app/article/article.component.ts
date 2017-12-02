@@ -11,10 +11,9 @@ import { ArticleService } from './article.service'
 })
 export class ArticleComponent implements OnInit {
 
-  articleInfo: object = {
-    title: ''
+  articleInfo: any = {
   }
-  private randomBgClass: string
+  randomBgClass: string
 
   constructor(
     private article: ArticleService,
@@ -28,7 +27,6 @@ export class ArticleComponent implements OnInit {
       .then(response => {
         if (response.body.code === 0) {
           this.articleInfo = response.body.data
-          console.log(response)
         }
       })
   }

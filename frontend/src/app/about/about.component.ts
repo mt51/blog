@@ -9,7 +9,7 @@ export class AboutComponent implements OnInit {
 
   constructor() { }
 
-  private randomBgClass: string
+  randomBgClass: string
 
   ngOnInit() {
     this.randomBgClass = 'about-title random_' + Math.ceil(Math.random() * 19);

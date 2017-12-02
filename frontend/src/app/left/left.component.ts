@@ -27,9 +27,9 @@ export class LeftComponent implements OnInit {
     private category: LeftService
   ) { }
 
-  private categoryInfo: object []
-  private listState: string = 'inactive'
-  private active: boolean = false
+  categoryInfo: object []
+  listState: string = 'inactive'
+  active: boolean = false
 
   @Input() leftVisible: boolean
   @Output() onVisible = new EventEmitter<boolean>();
