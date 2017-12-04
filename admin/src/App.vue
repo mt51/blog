@@ -6,7 +6,25 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  beforeCreated () {
+    this.auth()
+  },
+  methods: {
+    auth () {
+      this.axios.get('/api/auth')
+        .then(respnose => {
+        })
+        .catch(error => {
+          if (error.response.status === 401) {
+            window.localStorage.removeItem('token')
+            this.$router.push({path: '/signin'})
+          } else {
+            console.error(error.response.data.verror.msg)
+          }
+        })
+    }
+  }
 }
 </script>
 
