@@ -19,6 +19,8 @@
       font-size: 26px;
       color: #fff;
       font-weight: bold;
+      word-break: break-word;
+      line-height: 1.5;
     }
   }
   .descp {
@@ -73,10 +75,10 @@
 }
 @media screen and (max-width: 1024px) {
   .article-list {
-    width: 100%;
+    width: 95%;
     margin: 0 auto;
     .item-title {
-      height: 80px;
+      min-height: 80px;
       p{
         font-size: 18px;
       }

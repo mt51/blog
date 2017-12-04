@@ -4,17 +4,26 @@
   background: #fff;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
   .article-title {
+    width: 100%;
     position: relative;
     background: #00907a;
     height: 224px;
     background-size: cover;
+    overflow: hidden;
     p {
+      box-sizing: border-box;
+      width: 100%;
+      padding-right: 30px;
       position: absolute;
-      bottom: 30px;
+      bottom: 15px;
       left: 30px;
       font-size: 26px;
       color: #fff;
       font-weight: bold;
+      line-height: 1.5;
+      white-space:nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
   .author {
@@ -53,6 +62,7 @@
 @media screen and (max-width: 1024px) {
   .article {
     width: 100%;
+    margin: 0 auto;
     .article-title {
       height: 80px;
     }
