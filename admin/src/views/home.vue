@@ -42,45 +42,6 @@
           }, {
             title: '日期',
             key: 'date'
-          }, {
-            title: '操作',
-            key: 'action',
-            render: (h, p) => {
-              return h('div', {
-                class: {
-                  btnGroup: true
-                }
-              }, [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.edit(p)
-                    }
-                  }
-                }, '编辑'),
-                h('Button', {
-                  props: {
-                    type: 'ghost',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.deleteTips(p)
-                    }
-                  }
-                }, '删除')
-              ])
-            }
           }
         ]
       }
