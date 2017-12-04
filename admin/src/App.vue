@@ -7,7 +7,7 @@
 <script>
 export default {
   name: 'app',
-  beforeCreated () {
+  beforeCreate () {
     this.auth()
   },
   methods: {
