@@ -119,10 +119,14 @@
           }
         })
         .catch(error => {
-          if (error.status === 401) {
-            this.$router.push({path: '/signin'})
+          if (error.response.status === 401) {
+            this.$Message.error('请先登录')
+            window.localStorage.removeItem('token')
+            setTimeout(() => {
+              this.$router.push({path: '/signin'})
+            }, 1500)
           } else {
-            this.$Message.error(error.response.error.msg)
+            this.$Message.error(error.response.data.verror.msg)
           }
         })
       },

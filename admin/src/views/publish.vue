@@ -111,6 +111,15 @@
     },
     components: {
       md
+    },
+    beforeRouteLeave (from, to, next) {
+      debugger
+      if (this.articleData.mdcont !== '') {
+        this.$Message.warning('有内容未保存')
+        next(false)
+      } else {
+        next()
+      }
     }
   }
 </script>

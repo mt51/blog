@@ -167,7 +167,7 @@
         })
         .catch(e => {
           if (e.response.data.verror) {
-            if (e.status === 401) {
+            if (e.response.status === 401) {
               this.$router.push({path: '/signin'})
             } else {
               this.$Message.error(e.response.data.verror.msg)
