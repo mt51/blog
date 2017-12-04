@@ -11,6 +11,7 @@ const user = require('./user.js');
 const log = require('./log.js');
 const impor = require('./import.js');
 const sort = require('./sort.js');
+const auth = require('./auth.js');
 
 router.use('/signin', signin);
 router.use('/article', article);
@@ -21,5 +22,6 @@ router.use('/user', user);
 router.use('/log', log);
 router.use('/import', impor);
 router.use('/sort', sort);
+router.use('/auth', auth);
 
 module.exports = router;
