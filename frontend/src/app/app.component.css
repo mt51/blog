@@ -9,6 +9,13 @@
   left: 0;
   font-size: 24px;
 }
+.copy {
+  width: 100%;
+  text-align: center;
+  position: sticky;
+  bottom: 0;
+  padding-bottom: 60px;
+}
 @media screen and (max-width: 1024px) {
   .menu-bar {
     position: absolute;
