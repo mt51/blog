@@ -62,9 +62,9 @@
           this.articleData = this.initArticleData()
           setTimeout(() => {
             if (draft) {
-              this.$router.push({'name': 'article'})
-            } else {
               this.$router.push({'name': 'draft'})
+            } else {
+              this.$router.push({'name': 'article'})
             }
           }, 1500)
         }).catch(error => {
