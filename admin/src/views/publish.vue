@@ -59,8 +59,13 @@
         })
         .then(response => {
           this.$Message.success('保存成功')
+          this.articleData = this.initArticleData()
           setTimeout(() => {
-            this.$router.push({'name': 'article'})
+            if (draft) {
+              this.$router.push({'name': 'article'})
+            } else {
+              this.$router.push({'name': 'draft'})
+            }
           }, 1500)
         }).catch(error => {
           if (error.response.status === 401) {
@@ -113,7 +118,6 @@
       md
     },
     beforeRouteLeave (from, to, next) {
-      debugger
       if (this.articleData.mdcont !== '') {
         this.$Message.warning('有内容未保存')
         next(false)
