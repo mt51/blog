@@ -13,8 +13,8 @@
       </Select>
       <Input v-model="articleData.description" type="textarea" :rows="4" placeholder="摘要"></Input>
       <div class="btn-group">
-        <Button type="dashed" @click="publish($event, true)">存为草稿</Button>
-        <Button type="primary" @click.native="publish">发布</Button>
+        <Button type="dashed" @click="publish($event, true)" :disabled="disabled">存为草稿</Button>
+        <Button type="primary" @click.native="publish" :disabled="disabled">发布</Button>
       </div>
     </div>
   </div>
@@ -28,7 +28,8 @@
         articleId: '',
         articleData: this.initArticleData(),
         tags: [],
-        categorys: []
+        categorys: [],
+        disabled: false
       }
     },
     created () {
@@ -43,6 +44,7 @@
     },
     methods: {
       publish ($event, draft) {
+        debugger
         if (draft) {
           this.articleData.draft = true
         } else {
@@ -52,6 +54,7 @@
         this.articleData.tags = this.articleData.tags.length > 0 ? '' : this.articleData.tags.join(',')
         const url = this.view === 'add' ? '/api/article' : '/api/article/' + this.articleId
         const method = this.view === 'add' ? 'post' : 'put'
+        this.disabled = true
         this.axios.request({
           url: url,
           method: method,
