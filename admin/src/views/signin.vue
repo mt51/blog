@@ -19,7 +19,7 @@
           </FormItem>
         </Form>
         <div class="form-item">
-          <Button type="primary" class="signin-btn" @click.native="signin">登录</Button>
+          <Button type="primary" class="signin-btn" @click.native="signin" :disabled="disabled">登录</Button>
         </div>
       </div>
     </card>
@@ -35,6 +35,7 @@ export default {
         account: '',
         password: ''
       },
+      disabled: false,
       ruleValidate: {
         account: [{required: true, message: '用户名不能为空', trigger: 'blur'}],
         password: [{required: true, message: '密码不能为空', trigger: 'blur'}]
@@ -45,8 +46,10 @@ export default {
     signin () {
       this.$refs.signin.validate(valid => {
         if (valid) {
+          this.disabled = true
           this.axios.post('/api/signin', this.formData)
           .then(response => {
+            this.disabled = false
             if (response.data.code === 0 && response.data.data.token) {
               this.$Message.success('登录成功')
               window.localStorage.setItem('token', response.data.data.token)
@@ -56,6 +59,7 @@ export default {
             }
           })
           .catch(e => {
+            this.disabled = false
             if (e.response.data) {
               this.$Message.error(e.response.data.verror.msg)
             }

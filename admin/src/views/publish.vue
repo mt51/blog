@@ -44,14 +44,13 @@
     },
     methods: {
       publish ($event, draft) {
-        debugger
         if (draft) {
           this.articleData.draft = true
         } else {
           this.articleData.draft = false
         }
         this.articleData.htmlcont = this.$refs.md.getHtmlcont()
-        this.articleData.tags = this.articleData.tags.length > 0 ? '' : this.articleData.tags.join(',')
+        this.articleData.tags = this.articleData.tags.length === 0 ? '' : this.articleData.tags.join(',')
         const url = this.view === 'add' ? '/api/article' : '/api/article/' + this.articleId
         const method = this.view === 'add' ? 'post' : 'put'
         this.disabled = true
