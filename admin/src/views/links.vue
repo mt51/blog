@@ -122,7 +122,6 @@
         this.view = 'add'
       },
       confirm () {
-        debugger
         let url = this.view === 'add' ? '/api/link' : '/api/link/' + this.currentLinkId
         let method = this.view === 'add' ? 'post' : 'put'
         this.$refs.link.validate(valid => {
