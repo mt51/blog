@@ -15,6 +15,7 @@ import Themes from '@/views/themes'
 import User from '@/views/user'
 import Dashboard from '@/views/dashboard'
 import Import from '@/views/import'
+import Link from '@/views/links'
 
 Vue.use(Router)
 
@@ -97,6 +98,11 @@ export default new Router({
         name: 'import',
         component: Import,
         meta: {nickname: '导入文章'}
+      }, {
+        path: 'links',
+        name: 'links',
+        component: Link,
+        meta: {nickname: '友链管理'}
       }]
     }, {
       path: '/signin',

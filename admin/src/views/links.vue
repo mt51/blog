@@ -1,37 +1,43 @@
 <template>
-  <div class="tags">
+  <div class="links">
     <div class="add">
-      <Button type="primary" @click.native="addNewTag">新增标签</Button>
+      <Button type="primary" @click.native="addNewLink">新增友链</Button>
     </div>
     <Table :loading="loading" :columns="columns" :data="data" stripe></Table>
-    <Modal v-model="modelVisible" title="添加标签" :styles="{top: '20px'}" @on-ok="confirm" :loading="fomrLoading">
-        <Form ref="tag" :rules="ruleValidate" :model="tag" :label-width="80">
-          <FormItem label="标签名" prop="name">
-            <Input v-model="tag.name"></Input>
+    <Modal v-model="modelVisible" title="新增友链" :styles="{top: '20px'}" @on-ok="confirm" :loading="fomrLoading">
+        <Form ref="link" :rules="ruleValidate" :model="link" :label-width="80">
+          <FormItem label="标题" prop="title">
+            <Input v-model="link.title"></Input>
           </FormItem>
-          <FormItem label="描述" prop="description">
-            <Input v-model="tag.description"></Input>
+          <FormItem label="描述" prop="descp">
+            <Input v-model="link.descp"></Input>
+          </FormItem>
+          <FormItem label="地址" prop="link">
+            <Input v-model="link.link"></Input>
+          </FormItem>
+          <FormItem label="头像" prop="avatar">
+            <Input v-model="link.avatar"></Input>
           </FormItem>
         </Form>
     </Modal>
   </div>
 </template>
 <script>
-  import formatDate from '@/util/date'
   export default {
-    name: 'article',
+    name: 'links',
     data () {
       return {
         columns: [
           {
-            title: '标签名',
-            key: 'name'
+            title: '名称',
+            key: 'title'
           }, {
             title: '描述',
-            key: 'description'
+            key: 'descp',
+            ellipsis: true
           }, {
-            title: '创建日期',
-            key: 'date'
+            title: '地址',
+            key: 'link'
           }, {
             title: '操作',
             key: 'action',
@@ -73,60 +79,65 @@
             }
           }
         ],
+        currentLinkId: '',
         data: [],
+        modelVisible: false,
+        link: {
+          title: '',
+          descp: '',
+          link: '',
+          avatar: ''
+        },
+        view: '',
         loading: false,
         fomrLoading: true,
-        currentTagId: '',
-        tag: {
-          name: '',
-          description: '',
-          type: 'tag'
-        },
-        tags: [],
-        modelVisible: false,
         ruleValidate: {
-          name: [{ required: true, message: '名称不能为空', trigger: 'blur' }]
-        },
-        view: 'add'
+          title: [{ required: true, message: '标题不能为空', trigger: 'blur' }],
+          link: [{ required: true, message: '地址不能为空', trigger: 'blur' }]
+        }
       }
     },
-    created () {
-      this.fetchTagList()
-    },
     methods: {
-      fetchTagList () {
+      fetchLinklists () {
         this.loading = true
-        this.axios.get('/api/category?type=tag')
-          .then((response) => {
-            if (response.data.code === 0) {
-              this.loading = false
-              this.data = response.data.data.tags
-              this.data.forEach(item => {
-                item.date = formatDate(item.date, 'yyyy-MM-dd')
-              })
+        this.axios.get('/api/link')
+          .then(response => {
+            this.loading = false
+            this.data = response.data.data
+          }).catch(error => {
+            this.loading = false
+            if (error.response.status === 401) {
+              this.$Message.error('请先登录')
+              window.localStorage.removeItem('token')
+              setTimeout(() => {
+                this.$router.push({path: '/signin'})
+              }, 1500)
+            } else {
+              this.$Message.error(error.response.data.verror.msg)
             }
           })
       },
-      addNewTag () {
+      addNewLink () {
         this.modelVisible = true
         this.view = 'add'
       },
       confirm () {
-        let url = this.view === 'add' ? '/api/category' : '/api/category/' + this.currentTagId
+        debugger
+        let url = this.view === 'add' ? '/api/link' : '/api/link/' + this.currentLinkId
         let method = this.view === 'add' ? 'post' : 'put'
-        this.$refs.tag.validate(valid => {
+        this.$refs.link.validate(valid => {
           if (valid) {
             this.axios.request({
               url: url,
               method: method,
-              data: this.tag
+              data: this.link
             })
             .then(response => {
               if (response.data.code === 0) {
                 this.modelVisible = false
                 this.$Message.success('保存成功')
-                this.fetchTagList()
-                this.$refs.tag.resetFields()
+                this.fetchLinklists()
+                this.$refs.link.resetFields()
               }
             })
             .catch(error => {
@@ -139,62 +150,60 @@
               } else {
                 this.$Message.error(error.response.data.verror.msg)
               }
-              setTimeout(() => {
-                this.fomrLoading = false
-                this.$nextTick(() => {
-                  this.fomrLoading = true
-                })
-              }, 1000)
-            })
-          } else {
-            this.fomrLoading = false
-            this.$nextTick(() => {
-              this.fomrLoading = true
             })
           }
         })
       },
       edit (p) {
-        this.tag.name = p.row.name
-        this.tag.description = p.row.description
-        this.modelVisible = true
         this.view = 'edit'
-        this.currentTagId = p.row['_id']
+        this.link = p.row
+        this.modelVisible = true
+        this.currentLinkId = p.row['_id']
       },
-      deleteTagById () {
-        this.axios.delete('/api/category/' + this.currentTagId)
+      deleteLink () {
+        this.axios.delete('/api/link/' + this.currentLinkId)
         .then(response => {
           if (response.data.code === 0) {
             this.$Message.success('删除成功')
-            this.fetchTagList()
+            this.fetchLinklists()
           } else {
             this.$Message.error('删除失败')
           }
         })
+        .catch(error => {
+          if (error.response.status === 401) {
+            this.$Message.error('请先登录')
+            window.localStorage.removeItem('token')
+            setTimeout(() => {
+              this.$router.push({path: '/signin'})
+            }, 1500)
+          } else {
+            this.$Message.error(error.response.data.verror.msg)
+          }
+        })
       },
       deleteTips (p) {
-        this.currentTagId = p.row['_id']
+        this.currentLinkId = p.row['_id']
         this.$Modal.confirm({
           title: '提醒',
           content: '确认删除？',
           okText: '删除',
           cancelText: '取消',
-          onOk: this.deleteTagById
+          onOk: this.deleteLink
         })
       }
+    },
+    created () {
+      this.fetchLinklists()
     }
   }
 </script>
 <style lang="scss">
-  .tags {
+  .links{
     margin-left: 20px;
     margin-right: 20px;
     .add{
       margin-bottom: 20px;
-      text-align: right;
-    }
-    .page{
-      margin-top: 20px;
       text-align: right;
     }
   }

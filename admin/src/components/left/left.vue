@@ -53,6 +53,10 @@
         <Icon type="ios-compose"></Icon>
         <span class="layout-text">草稿箱</span>
       </MenuItem>
+      <MenuItem name="links">
+        <Icon type="link"></Icon>
+        <span class="layout-text">友链管理</span>
+      </MenuItem>
     </Menu>
   </div>
 </template>
