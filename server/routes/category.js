@@ -22,7 +22,9 @@ router.get('/', (req, res, next) => {
       categorys: []
     };
     data.forEach(item => {
-      tempData[item.type + 's'].push(item);
+      if (item.type) {
+        tempData[item.type + 's'].push(item);
+      }
     })
     res.status(200);
     res.json({
@@ -37,6 +39,16 @@ router.get('/', (req, res, next) => {
 
 router.post('/', jwt.checkAuth, (req, res, next) => {
   const category = req.body;
+  if (!category.type) {
+    res.status(400)
+    res.json({
+      code: 4,
+      verror: {
+        msg: '参数错误'
+      }
+    })
+    return;
+  }
   category.date = new Date().getTime();
   CategoryModel.findOne({name: category.name, type: category.type})
   .then((data) => {
