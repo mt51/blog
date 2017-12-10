@@ -1,9 +1,9 @@
 <ul class="links-list">
-  <li class="link-item">
-    <a href="https://imgxing.com">
-      <img src="//cdn.iluoy.com/avatar/17092023434459c28cb0c9b85_width_200_height_200.png">
-      <p><span class="link-title">IMGXING</span><br>
-      <span>帅阿星的博客</span></p>
+  <li class="link-item" *ngFor="let item of linksList">
+    <a href="{{item.link}}">
+      <img src="{{formatAvatar(item)}}">
+      <p><span class="link-title">{{item.title}}</span><br>
+      <span>{{item.descp}}</span></p>
     </a>
   </li>
 </ul>
