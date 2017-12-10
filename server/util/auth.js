@@ -8,7 +8,6 @@ const generateToken = data => {
 
 const checkAuth = (req, res, next) => {
   const token = req.headers.token;
-  console.log(token)
   if (!token) {
     res.status(401);
     return res.json({

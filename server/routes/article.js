@@ -121,7 +121,7 @@ router.put('/:id', jwt.checkAuth, (req, res, next) => {
   .findOne({'_id': articleId})
   .then((article) => {
     if (!article) {
-      res.status('400');
+      res.status(400);
       res.json({
         code: 4,
         verror: {
