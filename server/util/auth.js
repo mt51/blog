@@ -3,7 +3,7 @@ const config = require('../config');
 const UserModel = require('../model/user.js');
 
 const generateToken = data => {
-  return jwt.sign(data, config.secret, { expiresIn: '1h' });
+  return jwt.sign(data, config.secret, { expiresIn: '24h' });
 }
 
 const checkAuth = (req, res, next) => {
