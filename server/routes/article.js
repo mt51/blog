@@ -3,6 +3,8 @@ const router = express.Router();
 
 const ArticleModel = require('../model/article');
 const jwt = require('../util/auth.js');
+const mongo = require('../mongo/mongo.js');
+const info = require('../util/info.js');
 
 /* 获取文章列表 */
 router.get('/', (req, res, next) => {
@@ -15,76 +17,13 @@ router.get('/', (req, res, next) => {
   if (type === 'draft' ) {
     search.draft = true
   }
-  ArticleModel
-  .find(search)
-  .skip((page - 1) * size)
-  .limit(size)
-  .sort('-date')
-  .exec()
-  .then(data => {
-    let tempData = JSON.parse(JSON.stringify(data))
-    tempData.forEach((item) => {
-      item.date = new Date(item.date).getTime();
-      delete item.mdcont
-      delete item.htmlcont
-    })
-    ArticleModel.count().then((count) => {
-      res.status(200);
-      res.json({
-        code: 0,
-        data: tempData,
-        total: count,
-        page: page - 0
-      })
-    })
-    .catch((e) => {
-      throw new Error(e);
-    })
-  })
-  .catch(e => {
-    throw new Error(e);
-    res.status(500);
-    res.json({
-      code: 5,
-      verror: {
-        msg: 'Something error'
-      }
-    })
-  })
+  queryArticle(search, {size: size, page: page}, '-date', res);
 })
 
 /* 根据id获取文章 */
 router.get('/:id', (req, res, next) => {
   const articleId = req.params.id;
-  ArticleModel
-  .findOne({'_id': articleId})
-  .then(data => {
-    if (!data) {
-      res.status(400);
-      res.json({
-        code: 4,
-        verror: {
-          msg: '未查找到相关记录'
-        }
-      })
-      return;
-    }
-    res.status(200);
-    res.json({
-      code: 0,
-      data: data
-    })
-  })
-  .catch(error => {
-    throw new Error(error);
-    res.status(500);
-    res.json({
-      code: 5,
-      data: {
-        msg: 'success'
-      }
-    })
-  })
+  mongo.queryDetailById(ArticleModel, articleId, res);
 })
 
 /*发布新文章*/
@@ -92,67 +31,53 @@ router.post('/', jwt.checkAuth, (req, res, next) => {
   const articleData = req.body;
   articleData.date = new Date().getTime();
   articleData.author = "胖先森";
-  const newArticle = new ArticleModel(articleData);
-  newArticle.save().then(() =>{
-    res.status(200);
-    res.json({
-      code: 0,
-      data: {
-        msg: '保存成功'
-      }
-    })
-  }).catch(e => {
-    throw new Error(e);
-    res.status(500);
-    res.json({
-      code: 5,
-      verror: {
-        msg: 'Something error'
-      }
-    })
-  })
+  mongo.add(ArticleModel, articleData, res);
 })
 
 /*更新文章*/
 router.put('/:id', jwt.checkAuth, (req, res, next) => {
   const articleId = req.params.id;
   const articleData = req.body;
-  ArticleModel
-  .findOne({'_id': articleId})
-  .then((article) => {
-    if (!article) {
-      res.status(400);
-      res.json({
-        code: 4,
-        verror: {
-          msg: '未查找到相关记录'
-        }
-      })
-      return;
-    }
-    ArticleModel
-    .update({'_id': articleId}, {$set: articleData})
-    .then(() => {
-      res.status(200);
-      res.json({
-        code: 0,
-        data: {
-          msg: 'success'
-        }
-      })
+  mongo.update(ArticleModel, articleId, articleData, res);
+})
+
+/*删除文章*/
+router.delete('/:id', (req, res, next) => {
+  const articleId = req.params.id;
+  mongo.deleteById(ArticleModel, articleId, res)
+})
+
+
+const queryArticle = async function (search, params, sort, res) {
+  const readData = function () {
+    return ArticleModel
+    .find(search)
+    .skip((params.page - 1) * params.size)
+    .limit(params.size)
+    .sort(sort)
+    .exec()
+  }
+
+  const getCount = function () {
+    return ArticleModel.count()
+  }
+
+  try {
+    let [data, count] = await Promise.all([readData(), getCount()])
+    const tempData = JSON.parse(JSON.stringify(data))
+    tempData.forEach((item) => {
+      item.date = new Date(item.date).getTime();
+      delete item.mdcont
+      delete item.htmlcont
     })
-    .catch(e => {
-      throw new Error(e);
-      res.status(500);
-      res.json({
-        code: 5,
-        verror: {
-          msg: 'Something error'
-        }
-      })
+
+    res.json({
+      code: 0,
+      data: tempData,
+      total: count,
+      page: params.page - 0
     })
-  })
-  .catch(e => {
+  } catch (e) {
     throw new Error(e);
     res.status(500);
     res.json({
@@ -161,48 +86,7 @@ router.put('/:id', jwt.checkAuth, (req, res, next) => {
         msg: 'Something error'
       }
     })
-  })
-})
-
-/*删除文章*/
-router.delete('/:id', jwt.checkAuth, (req, res, next) => {
-  const articleId = req.params.id;
-  ArticleModel
-  .findOne({'_id': articleId})
-  .then((article) => {
-    if (!article) {
-      res.status('400');
-      res.json({
-        code: 4,
-        verror: {
-          msg: '未查找到相关记录'
-        }
-      })
-      return;
-    }
-    ArticleModel
-    .remove({'_id': articleId})
-    .then(() => {
-      res.status(200);
-      res.json({
-        code: 0,
-        data: {
-          msg: 'success'
-        }
-      })
-    })
-    .catch(e => {
-      throw new Error(e);
-      res.status(500);
-      res.json({
-        code: 5,
-        verror: {
-          msg: 'Something error'
-        }
-      })
-    })
-  })
-})
-
+  }
+}
 
 module.exports = router;
