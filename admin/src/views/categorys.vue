@@ -41,20 +41,20 @@
                   btnGroup: true
                 }
               }, [
-                h('Button', {
-                  props: {
-                    type: 'primary',
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.edit(p)
-                    }
-                  }
-                }, '编辑'),
+                // h('Button', {
+                //   props: {
+                //     type: 'primary',
+                //     size: 'small'
+                //   },
+                //   style: {
+                //     marginRight: '5px'
+                //   },
+                //   on: {
+                //     click: () => {
+                //       this.edit(p)
+                //     }
+                //   }
+                // }, '编辑'),
                 h('Button', {
                   props: {
                     type: 'ghost',

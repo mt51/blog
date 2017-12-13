@@ -4,8 +4,6 @@ const router = express.Router();
 const ArticleModel = require('../model/article');
 const jwt = require('../util/auth.js');
 const mongo = require('../mongo/mongo.js');
-const info = require('../util/info.js');
-
 /* 获取文章列表 */
 router.get('/', (req, res, next) => {
   const page = req.query.page || 1;
