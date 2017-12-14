@@ -6,8 +6,8 @@ const add = async function (model, data, res) {
     await newData.save()
     info.success(res);
   } catch (e) {
-    throw new Error(e);
     info.wrong(res);
+    throw new Error(e);
   }
 } 
 
@@ -21,8 +21,8 @@ const deleteById = async function (model, id, res) {
       info.empty();
     }
   } catch (e) {
-    throw new Error(e);
     info.wrong(res);
+    throw new Error(e);
   }
 }
 
@@ -36,8 +36,8 @@ const update = async function (model, id, data, res) {
       info.empty(res);
     }
   } catch (e) {
-    throw new Error(e);
     info.wrong(res);
+    throw new Error(e);
   }
 }
 
@@ -63,9 +63,24 @@ const queryDetailById = async function (model, id, res) {
   }
 }
 
+const query = async function (model, res) {
+  try {
+    const data = await model.find();
+    res.status(200);
+    res.json({
+      code: 0,
+      data
+    })
+  } catch (e) {
+    throw new Error(e)
+    info.wrong(res);
+  }
+}
+
 module.exports = {
   deleteById,
   update,
   queryDetailById,
-  add
+  add,
+  query
 }

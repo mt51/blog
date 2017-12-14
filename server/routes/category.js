@@ -34,6 +34,13 @@ router.get('/', (req, res, next) => {
     })
   })
   .catch((e) => {
+    res.status(500);
+    res.json({
+      code: 5,
+      verror: {
+        msg: 'Something error'
+      }
+    })
     throw new Error(e);
   })
 })

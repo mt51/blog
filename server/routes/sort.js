@@ -8,44 +8,33 @@ const ArticleModel = require('../model/article');
 router.get('/:category', (req, res, next) => {
   const page = req.query.page || 1;
   const type = req.params.category
-  ArticleModel.find({category: type, draft: false})
-  .skip((page - 1) * 10)
-  .limit(10)
-  .sort('-date')
-  .exec()
-  .then(data => {
-    ArticleModel.count({category: type, draft: false})
-    .then(count =>{
-      res.status(200);
-      res.json({
-        code: 0,
-        data: data,
-        page: page - 0,
-        total: count
-      })
+  queryArticleByCategory(page, type, res)
+})
+
+const queryArticleByCategory = async function (page, type, res) {
+  console.log(type)
+  try {
+    const data = await ArticleModel.find({category: type, draft: false})
+      .skip((page - 1) * 10)
+      .limit(10)
+      .sort('-date')
+      .exec()
+    res.status(200);
+    res.json({
+      code: 0,
+      data
     })
-    .catch(e => {
-      throw new Error(e)
-      res.status(500)
-      res.json({
-        code: 5,
-        verror: {
-          msg: 'Something error'
-        }
-      })
-    })
-  })
-  .catch(e => {
-    throw new Error(e)
-    res.status(500)
+  } catch (e) {
+    res.status(500);
     res.json({
       code: 5,
       verror: {
         msg: 'Something error'
       }
     })
-  })
-})
+    throw new Error(e)
+  }
+}
 
 
 module.exports = router;

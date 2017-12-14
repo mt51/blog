@@ -76,7 +76,6 @@ const queryArticle = async function (search, params, sort, res) {
       page: params.page - 0
     })
   } catch (e) {
-    throw new Error(e);
     res.status(500);
     res.json({
       code: 5,
@@ -84,6 +83,7 @@ const queryArticle = async function (search, params, sort, res) {
         msg: 'Something error'
       }
     })
+    throw new Error(e);
   }
 }
 

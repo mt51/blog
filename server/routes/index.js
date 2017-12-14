@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 
 const signin = require('./signin.js');
-const signout = require('./signout.js');
 const signup = require('./signup.js');
 const article = require('./article.js');
 const qiniu = require('./qiniu.js');

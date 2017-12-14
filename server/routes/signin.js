@@ -5,7 +5,7 @@ const jwt = require('../util/auth.js')
 const LogModel = require('../model/log.js');
 
 /*登录*/
-router.post('/', (req, res, next) => {
+router.post('/',  async (req, res, next) => {
   const userInfo = req.body;
   if (!userInfo.account) {
     res.status(400);
@@ -27,9 +27,8 @@ router.post('/', (req, res, next) => {
     })
   }
 
-  UserModel
-  .findOne({account:userInfo.account})
-  .then(user => {
+  try {
+    const user = await UserModel.findOne({account:userInfo.account})
     if (!user) {
       res.status(400);
       return res.json({
@@ -39,54 +38,30 @@ router.post('/', (req, res, next) => {
         }
       })
     }
-    user.comparePassword(userInfo.password)
-    .then(isMatch => {
-      if (!isMatch) {
-        res.status(400);
-        return res.json({
-          code: 4,
-          verror: {
-            msg: '用户名密码不匹配'
-          }
-        })
-      }
-      delete userInfo.password
-      const token = jwt.generateToken(userInfo);
-      UserModel
-      .update({account: user.account}, {$set: {token: token}})
-      .then(() => {
-        saveLog(req, user.account);
-        res.status(200);
-        res.json({
-          code: 0,
-          data: {
-            token: token
-          }
-        })
-      })
-      .catch(err => {
-        throw new Error(err);
-        res.json({
-          code: 5,
-          verror: {
-            msg: 'Something error'
-          }
-        })
-      })
-    })
-    .catch(err => {
-      throw new Error(err);
-      res.status(500);
-      res.json({
-        code: 5,
+    const isMatch = await user.comparePassword(userInfo.password)
+    if (!isMatch) {
+      res.status(400);
+      return res.json({
+        code: 4,
         verror: {
-          msg: 'Something error'
+          msg: '用户名密码不匹配'
         }
       })
+    }
+    delete userInfo.password
+    const token = jwt.generateToken(userInfo);
+    await UserModel.update({account: user.account}, {$set: {token: token}});
+
+    saveLog(req, user.account);
+    res.status(200);
+    res.json({
+      code: 0,
+      data: {
+        token: token
+      }
     })
-  })
-  .catch(err => {
-    throw new Error(err);
+
+  } catch (e) {
     res.status(500);
     res.json({
       code: 5,
@@ -94,10 +69,11 @@ router.post('/', (req, res, next) => {
         msg: 'Something error'
       }
     })
-  })
+    throw new Error(err);
+  }
 })
 
-const saveLog = (req, account) => {
+const saveLog = async (req, account) => {
   const ip = getIp(req);
   let log = {
     account: account,
@@ -105,26 +81,22 @@ const saveLog = (req, account) => {
     ip: ip
   }
   const newLog = new LogModel(log);
-  newLog
-  .save()
-  .catch(e => {
-    throw new Error(e);
-  })
-  LogModel
-  .findOne({account: account})
-  .skip(1)
-  .sort('-date')
-  .exec()
-  .then(log => {
+  try {
+    await newLog.save()
+    const log = await LogModel
+      .findOne({account: account})
+      .skip(1)
+      .sort('-date')
+      .exec()
     if (log) {
-      UserModel
-      .update({account: account}, {$set: {lastTime: log.date, lastIp: log.ip}})
-      .catch(e => {
-        throw new Error(e)
-      })
+      UserModel.update({account: account}, {$set: {lastTime: log.date, lastIp: log.ip}})
     }
-  })
+  } catch (e) {
+    throw new Error(e);
+  }
 }
+
+const queryByKey = async params => UserModel.findOne(params)
 
 const getIp = req => {
   const ipArr = req.headers['x-forwarded-for'] || req.connection.remoteAddress.split(':');

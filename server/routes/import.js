@@ -13,17 +13,22 @@ const ArticleModel = require('../model/article.js');
 
 router.post('/', upload.array('file'),  (req, res) => {
   const files = req.files;
-  files.forEach(item => {
-    readFile(item.path)
-    .then((data) => {
+  files.forEach(async item => {
+    try {
+      let data = await readFile(item.path)
       data = data.toString('utf8');
       const result = marked.splitMarkdown(data);
       result.htmlcont = marked.render(result.mdcont);
       result.draft = false
-      saveArticke(result, res);
-    })
-    .catch(err => {
-      throw new Error(err);
+      await saveArticke(result);
+      res.status(200);
+      res.json({
+        code: 0,
+        data: {
+          msg: '保存成功'
+        }
+      })
+    } catch(err) {
       res.status(500);
       res.json({
         code: 5,
@@ -31,33 +36,14 @@ router.post('/', upload.array('file'),  (req, res) => {
           msg: 'Something error'
         }
       })
-    })
+      throw new Error(err);
+    }
   })
 })
 
-const saveArticke = (article, res) => {
+const saveArticke = (article) => {
   const newArticle = new ArticleModel(article)
-  newArticle
-  .save()
-  .then(() => {
-    res.status(200);
-    res.json({
-      code: 0,
-      data: {
-        msg: '保存成功'
-      }
-    })
-  })
-  .catch(e => {
-    throw new Error(e);
-    res.status(500);
-    res.json({
-      code: 5,
-      verror: {
-        msg: 'Something error'
-      }
-    })
-  })
+  return newArticle.save()
 }
 
 const readFile = path => {
