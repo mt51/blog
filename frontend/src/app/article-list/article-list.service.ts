@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 export class ArticlesListService {
   constructor (private http: HttpClient) {}
 
-  fetchArtlclesList (param):Promise <any> {
+  fetchArtlclesList (param:any):Promise <any> {
     return new Promise((resolve, reject) => {
       this.http.get('//localhost:3000/api/article', {observe: 'response', params: param})
         .subscribe(data => {

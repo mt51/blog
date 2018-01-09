@@ -7,6 +7,7 @@ import { LinkService } from './link.service';
   styleUrls: ['./link.component.scss'],
   providers: [LinkService]
 })
+
 export class LinkComponent implements OnInit{
 
   constructor(
@@ -24,7 +25,7 @@ export class LinkComponent implements OnInit{
       })
   }
 
-  formatAvatar (item) {
+  formatAvatar (item:any) {
     return item.avatar || '//ofl49b399.bkt.clouddn.com/1.jpg'
   }
 }

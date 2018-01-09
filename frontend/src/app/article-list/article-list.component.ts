@@ -32,7 +32,7 @@ export class ArticleListComponent implements OnInit {
     this.article.fetchArtlclesList({page: this.currentPage})
     .then(response => {
       if (response.body.code === 0) {
-        response.body.data.forEach(item => {
+        response.body.data.forEach((item:any) => {
           item.randomBgClass = this.randomBgClass();
         })
         this.flag = true
