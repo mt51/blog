@@ -10,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:aot": "ngc -p tsconfig-aot.json"
+    "build:aot": "ngc -p tsconfig-aot.json && rollup -c rollup-config.js",
+    "serve:aot": "lite-server -c bs-config.aot.json"
   },
   "private": true,
   "dependencies": {
@@ -47,6 +48,10 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "node-sass": "^4.7.1",
     "protractor": "~5.1.2",
+    "rollup": "^0.53.3",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
     "sass-loader": "^6.0.6",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
