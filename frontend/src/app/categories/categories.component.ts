@@ -37,7 +37,7 @@ export class CategoriesComponent implements OnInit {
       this.article.fetchArtlclesList({page: this.currentPage}, this.category)
       .then(response => {
         if (response.body.code === 0) {
-          response.body.data.forEach((item:any) => {
+          response.body.data.forEach(item => {
             item.randomBgClass = this.randomBgClass();
           })
           this.flag = true
