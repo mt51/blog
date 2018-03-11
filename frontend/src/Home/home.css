@@ -1,0 +1,22 @@
+.home {
+    width: 100%;
+}
+
+.home-wrapper {
+    width: 80%;
+    display: flex;
+    margin: 0 auto;
+    padding: 60px 0 20px;
+}
+
+@media screen and (max-width: 1200px) {
+    .home-wrapper {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .home-wrapper {
+        width: 95%;
+    }
+}
