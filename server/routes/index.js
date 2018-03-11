@@ -13,6 +13,8 @@ const sort = require('./sort.js');
 const auth = require('./auth.js');
 const link = require('./link.js');
 const search = require('./search.js');
+const archives = require('./archives.js')
+
 
 router.use('/signin', signin);
 router.use('/article', article);
@@ -26,5 +28,6 @@ router.use('/sort', sort);
 router.use('/auth', auth);
 router.use('/link', link);
 router.use('/search', search);
+router.use('/archives', archives)
 
 module.exports = router;

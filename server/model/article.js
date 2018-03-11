@@ -12,7 +12,8 @@ const ArticleSchema = new Schema({
   description: String,
   author: String,
   draft: Boolean,
-  origin: String
+  origin: String,
+  bg: String
 })
 
 ArticleSchema.statics = {
