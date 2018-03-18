@@ -28,6 +28,7 @@
 .ad-pic {
   width: 100%;
   height: auto;
+  max-height: 400px;
   margin-bottom: 40px;
 }
 @media screen and (max-width: 1200px) {
