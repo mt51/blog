@@ -1,21 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Signin from '@/views/signin'
-// import Home from '@/views/home'
-// import Category from '@/views/categorys'
-// import Article from '@/views/article'
-// import Base from '@/views/base'
-// import Draft from '@/views/draft'
-// import EditTheme from '@/views/edittheme'
-// import Pages from '@/views/pages'
-// import Publish from '@/views/publish'
-// import Statistics from '@/views/statistics'
-// import Tags from '@/views/tags'
-// import Themes from '@/views/themes'
-// import User from '@/views/user'
-// import Dashboard from '@/views/dashboard'
-// import Import from '@/views/import'
-// import Link from '@/views/links'
+import axios from 'axios'
 
 const Signin = () => import('@/views/signin')
 const Home = () => import('@/views/home')
@@ -36,7 +21,7 @@ const Link = () => import('@/views/links')
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   // mode: 'history',
   routes: [
     {
@@ -131,3 +116,24 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  const token = window.localStorage.getItem('token')
+  if (to.name === 'Signin') {
+    next()
+  } else {
+    if (!token) {
+      next('/signin')
+    } else {
+      axios.get('/api/auth')
+        .then(() => {
+          next()
+        })
+        .catch(() => {
+          next('/signin')
+        })
+    }
+  }
+})
+
+export default router

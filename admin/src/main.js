@@ -9,7 +9,7 @@ import axios from 'axios'
 
 Vue.use(iView)
 
-axios.defaults.baseURL = 'http://localhost:3000'
+axios.defaults.baseURL = 'http://localhost'
 axios.defaults.contentType = 'application/json'
 axios.interceptors.request.use(config => {
   const token = window.localStorage.getItem('token')
@@ -22,17 +22,6 @@ axios.interceptors.request.use(config => {
 Vue.prototype.axios = axios
 
 Vue.config.productionTip = false
-
-router.beforeEach((to, from, next) => {
-  const token = window.localStorage.getItem('token')
-  if (to.name !== 'Signin' && !token) {
-    next({
-      path: '/signin'
-    })
-  } else {
-    next()
-  }
-})
 
 /* eslint-disable no-new */
 new Vue({
