@@ -55,7 +55,7 @@ export default {
               window.localStorage.setItem('token', response.data.data.token)
               setTimeout(() => {
                 this.$router.push({name: 'home'})
-              }, 1500)
+              }, 1000)
             }
           })
           .catch(e => {

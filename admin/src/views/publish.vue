@@ -50,7 +50,8 @@
           this.articleData.draft = false
         }
         this.articleData.htmlcont = this.$refs.md.getHtmlcont()
-        this.articleData.tags = this.articleData.tags.length === 0 ? '' : this.articleData.tags.join(',')
+        const tempData = JSON.parse(JSON.stringify(this.articleData.tags))
+        this.articleData.tags = tempData.length === 0 ? '' : tempData.join(',')
         const url = this.view === 'add' ? '/api/article' : '/api/article/' + this.articleId
         const method = this.view === 'add' ? 'post' : 'put'
         this.disabled = true
@@ -77,6 +78,7 @@
               this.$router.push({path: '/signin'})
             }, 1500)
           } else {
+            this.disabled = false
             this.$Message.error(error.response.data.verror.msg)
           }
         })

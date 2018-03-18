@@ -19,7 +19,7 @@
 <script>
   import formatDate from '@/util/date'
   export default {
-    name: 'article',
+    name: 'tag',
     data () {
       return {
         columns: [

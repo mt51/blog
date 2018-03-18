@@ -79,14 +79,16 @@
         total: 0,
         currentArticleId: '',
         tags: [],
-        category: []
+        category: [],
+        page: 1
       }
     },
     created () {
-      this.fetchArticleList(1)
+      this.fetchArticleList(this.page)
     },
     methods: {
       fetchArticleList (page) {
+        this.page = page
         this.axios.get('/api/article?type=draft&page=' + page)
           .then((response) => {
             if (response.data.code === 0) {
@@ -101,11 +103,12 @@
       edit (p) {
         this.$router.push({name: 'edit', params: {id: p.row['_id']}})
       },
-      deleteArticle () {
+      deleteArticle (index) {
         this.axios.delete('/api/article/' + this.currentArticleId)
         .then(response => {
           if (response.data.code === 0) {
             this.$Message.success('删除成功')
+            this.fetchArticleList(this.page)
           } else {
             this.$Message.error('删除失败')
           }

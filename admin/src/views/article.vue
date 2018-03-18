@@ -7,7 +7,7 @@
 <script>
   import formatDate from '@/util/date'
   export default {
-    name: 'article',
+    name: 'articles',
     data () {
       return {
         columns: [
