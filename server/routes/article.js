@@ -25,10 +25,33 @@ router.get('/:id', (req, res, next) => {
 })
 
 /*发布新文章*/
-router.post('/', jwt.checkAuth, (req, res, next) => {
+router.post('/', jwt.checkAuth, async (req, res, next) => {
   const articleData = req.body;
+  let bgNum
   articleData.date = new Date().getTime();
   articleData.author = "胖先森";
+  let bgPath
+  try {
+    const bgList = await ArticleModel.find().limit(10).exec()
+    let tempData = []
+    bgList.forEach(item => {
+      tempData.push(item.bg)
+    })
+
+    const randomNum = () => {
+      const bgNum = Math.round(Math.random() * 19)
+      const bgPath = `//ozft0883x.bkt.clouddn.com/${bgNum}.jpg`
+      console.log(tempData.indexOf(bgNum) !== -1)
+      if (tempData.indexOf(bgPath) > -1) {
+        randomNum()
+      }
+      return bgPath
+    }
+    bgPath = randomNum()
+  } catch (e) {
+    throw new Error(e)
+  }
+  articleData.bg = bgPath
   mongo.add(ArticleModel, articleData, res);
 })
 

@@ -12,7 +12,7 @@ async function queryLogLists (page, size, res) {
   try {
     const data = await LogModel
       .find()
-      .skip((page - 1) * SIZE)
+      .skip((page - 1) * size)
       .limit(size)
       .sort('-date')
       .exec()
