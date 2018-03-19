@@ -43,7 +43,7 @@ export default class ArticleDetail extends Component {
     return (
      <div className="article-detail">
       <div className="ad-wrapper">
-        <img className="ad-pic" src={articleDetail.bg} alt="bg" />
+        <img className="ad-pic" src={'http:' + articleDetail.bg} alt="bg" />
         <div className="markdown-body" dangerouslySetInnerHTML={html}></div>
       </div>
       <LeftNav />

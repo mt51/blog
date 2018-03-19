@@ -13,7 +13,7 @@ export default class ArticlesListItem extends Component {
 
   render() {
     const { articlesItem } = this.props
-    const BASE_URL = `url(${articlesItem.bg}?imageMogr2/thumbnail/700x/blur/1x0/quality/75)`
+    const BASE_URL = `url(http:${articlesItem.bg}?imageMogr2/thumbnail/700x/blur/1x0/quality/75)`
     const divStyle = {
       backgroundImage: BASE_URL,
       backgroundSize: 'cover',

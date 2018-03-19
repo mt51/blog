@@ -39,7 +39,7 @@ router.post('/', jwt.checkAuth, async (req, res, next) => {
     })
 
     const randomNum = () => {
-      const bgNum = Math.round(Math.random() * 19)
+      const bgNum = Math.round(Math.random() * 30)
       const bgPath = `//ozft0883x.bkt.clouddn.com/${bgNum}.jpg`
       console.log(tempData.indexOf(bgNum) !== -1)
       if (tempData.indexOf(bgPath) > -1) {

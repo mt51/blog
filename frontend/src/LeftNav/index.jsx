@@ -109,7 +109,7 @@ export default class LeftNav extends Component {
                 <li className="ln-articles-item" key={index}>
                   <Link to={`/article/${item['_id']}`} className="ln-article-link">
                     <div className="ln-article-thumb">
-                      <img alt="bg" src={`${item.bg}?imageMogr2/thumbnail/80x/blur/1x0/quality/75`} />
+                      <img alt="bg" src={`http:${item.bg}?imageMogr2/thumbnail/80x/blur/1x0/quality/75`} />
                     </div>
                     <div className="ln-article-info">
                       <p className="ln-article-title">{item.title}</p>
