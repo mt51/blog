@@ -1,0 +1,10 @@
+{
+  "port": 7300,
+  "host": "0.0.0.0",
+  "db": "mongodb://localhost/test",
+  "unsplashClientId": "",
+  "jwt": {
+    "expire": "14 days",
+    "secret": "share secret"
+  }
+}
