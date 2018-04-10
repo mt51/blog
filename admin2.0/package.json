@@ -17,11 +17,13 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "bcryptjs": "^2.4.3",
+    "config": "^1.30.0",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.4",
     "debug": "~2.6.9",
     "element-ui": "^2.3.3",
     "express": "~4.16.0",
+    "express-jwt": "^5.3.1",
     "highlight": "^0.2.4",
     "http-errors": "~1.6.2",
     "jsonwebtoken": "^8.2.1",
