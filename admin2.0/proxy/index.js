@@ -1,5 +1,7 @@
 module.exports = {
   UserProxy: require('./user'),
   LogProxy: require('./log'),
-  articleProxy: require('./article')
+  ArticleProxy: require('./article'),
+  // CategoryProxy: require('./category'),
+  LinkProxy: require('./link')
 }

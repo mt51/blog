@@ -17,7 +17,7 @@ mongoose.connect(config.get('db'), {
 module.exports = {
   User: require('./user'),
   Category: require('./category'),
-  Links: require('./links'),
+  Link: require('./link'),
   Log: require('./log'),
   Article: require('./article')
 }
