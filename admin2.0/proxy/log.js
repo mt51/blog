@@ -12,7 +12,6 @@ module.exports = class LogProxy {
     log.account = account
     log.ip = ip
     log.date = Date.now()
-
     return log.save()
   }
 
