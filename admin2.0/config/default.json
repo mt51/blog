@@ -6,5 +6,7 @@
   "jwt": {
     "expire": "14 days",
     "secret": "share secret"
-  }
+  },
+  "bgCount": 31,
+  "qiniuUrl": "//ozft0883x.bkt.clouddn.com"
 }
