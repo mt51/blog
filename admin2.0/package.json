@@ -15,6 +15,7 @@
     "build:server": "webpack --config build/webpack.server.conf.js --progress --hide-modules"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
     "bcryptjs": "^2.4.3",
     "config": "^1.30.0",

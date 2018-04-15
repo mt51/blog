@@ -1,22 +1,6 @@
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-
-h1,
-h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+@import "element-ui/lib/theme-chalk/index.css";
+@import "font-awesome/css/font-awesome.css";
+@import "./lib/markdown.css";
+@import "./lib/highlight.css";
+@import "./base/reset.css";
+@import "./base/base.css";

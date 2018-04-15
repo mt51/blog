@@ -5,9 +5,11 @@ Vue.use(Router)
 
 export function createRouter () {
   return new Router({
-    modes: 'history',
-    routes: [{
-      path: '/', component: () => import('@/components/Foo.vue')
-    }]
+    mode: 'history',
+    routes: [
+      {
+        path: '/login', component: () => import('@/pages/Login/Login')
+      }
+    ]
   })
 }
