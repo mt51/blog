@@ -12,11 +12,6 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
-const styleRule = utils.styleLoaders({
-  sourceMap: isProd ? config.build.productionSourceMap: config.dev.cssSourceMap,
-  extract: isProd
-})
-
 module.exports = {
   devtool: isProd
     ? false
@@ -52,14 +47,14 @@ module.exports = {
                 loader: 'css-loader',
                 options: { minimize: true }
               },
-              'postcss-loader'
+              { loader: 'postcss-loader', options : { sourceMap : true } }
             ],
             fallback: 'vue-style-loader'
           })
           : [
             'vue-style-loader',
             { loader: 'css-loader', options: { importLoaders: 1 } },
-            'postcss-loader'
+            { loader: 'postcss-loader', options : { sourceMap : true } }
           ]
       },
       {
