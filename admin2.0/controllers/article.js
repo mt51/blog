@@ -55,4 +55,14 @@ module.exports = class ArticleController {
       res.json({ errMsg: '该文章不存在' })
     }
   }
+
+  static async query (req, res, next) {
+    const keyword = req.query.keyword
+    const result = await ArticleProxy.query(keyword)
+    res.status(200)
+    res.json({
+      result
+    })
+  }
+
 }

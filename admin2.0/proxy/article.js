@@ -1,4 +1,5 @@
 const { Article } = require('../models')
+const config = require('config')
 
 module.exports = class ArticleProxy {
   static async getArticlesList (size, page) {
@@ -31,15 +32,20 @@ module.exports = class ArticleProxy {
     const article = new Article(articleData)
     const bgPath = await gengrateBg()
     article.bg = bgPath
-    article.save()
+    return article.save()
   }
 
   static async update (articleId, data) {
     const article = new Article(data)
-    Article.update({'_id': articleId}, {$set: data})
+    return Article.update({'_id': articleId}, {$set: data})
   }
 
   static async deleteById (articleId) {
-    Article.remove({'_id': articleId})
+    return Article.remove({'_id': articleId})
+  }
+
+  static async query (keyword) {
+    const reg = new RegExp(`${keyword}`)
+    return Article.find({'title': reg}, '_id title description category date bg')
   }
 }
