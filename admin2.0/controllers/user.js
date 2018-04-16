@@ -27,7 +27,7 @@ module.exports = class UserController {
 
     if (!user) {
       res.status(400)
-      return res.json({errMsg: '用户不存在'})
+      return res.json({errMsg: '用户名或密码错误'})
     }
 
     const verifyPassword = baseUtil.bcomper(password, user.password)
