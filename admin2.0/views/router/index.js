@@ -8,7 +8,14 @@ export function createRouter () {
     mode: 'history',
     routes: [
       {
-        path: '/login', component: () => import('@/pages/Login/Login')
+        path: '/admin',
+        component: () => import('@/pages/index'),
+        name: 'admin'
+      },
+      {
+        path: '/login',
+        component: () => import('@/pages/Login/Login'),
+        name: 'login'
       }
     ]
   })

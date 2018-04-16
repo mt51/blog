@@ -47,12 +47,12 @@ export default {
       this.$refs.signin.validate(valid => {
         if (valid) {
           this.disabled = true
-          this.axios.post('/api/signin', this.formData)
+          this.axios.post('/api/u/login', this.formData)
             .then(response => {
               this.disabled = false
-              if (response.data.code === 0 && response.data.data.token) {
-                this.$Message.success('登录成功')
-                window.localStorage.setItem('token', response.data.data.token)
+              if (response.data.token) {
+                this.$message.success('登录成功')
+                window.localStorage.setItem('token', response.data.token)
                 setTimeout(() => {
                   this.$router.push({name: 'home'})
                 }, 1000)
@@ -61,7 +61,7 @@ export default {
             .catch(e => {
               this.disabled = false
               if (e.response.data) {
-                this.$Message.error(e.response.data.verror.msg)
+                this.$message.error(e.response.data.errMsg)
               }
             })
         }
