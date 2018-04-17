@@ -3,8 +3,7 @@
     <el-menu
       background-color="#545c64"
       text-color="#fff"
-      @select="handleSelect"
-      :router="true">
+      @select="handleSelect">
       <el-menu-item index="home">
         <i class="fa fa-home"></i>
         <span>首页</span>
@@ -27,7 +26,7 @@
         <i class="fa fa-tags"></i>
         <span>分类管理</span>
       </el-menu-item>
-      <el-menu-item index="tags">
+      <el-menu-item index="tag">
         <i class="fa fa-star"></i>
         <span>标签管理</span>
       </el-menu-item>
@@ -47,8 +46,8 @@ export default {
   name: 'TheAside',
   methods: {
     handleSelect (index, path) {
-      console.log(index)
-      console.log(path)
+      const route = path[path.length - 1]
+      this.$router.push({name: route})
     }
   }
 }
