@@ -3,19 +3,38 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "dependencies": {
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "mysql2": "^1.6.5"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.0.48",
+    "@types/koa-bodyparser": "^4.2.2",
+    "@types/koa-router": "^7.0.40",
+    "@types/node": "^11.10.5",
+    "nodemon": "^1.18.10",
+    "ts-node": "^8.0.3",
+    "tslint": "^5.13.1",
+    "tslint-config-airbnb": "^5.11.1",
+    "typescript": "^3.3.3333",
+    "webpack": "^4.29.6"
+  },
   "scripts": {
-    "build": "gulp"
+    "lint": "tslint --project tsconfig.json --format stylish",
+    "build": "tsc",
+    "serve": "ts-node server/app.ts",
+    "start": "nodemon"
   },
   "repository": {
     "type": "git",
-    "url": "git@gitee.com:liuziyangg/blog.git"
+    "url": "git+https://github.com/mt51/blog.git"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-clean": "^0.3.2"
+  "bugs": {
+    "url": "https://github.com/mt51/blog/issues"
   },
-  "dependencies": {}
+  "homepage": "https://github.com/mt51/blog#readme"
 }
