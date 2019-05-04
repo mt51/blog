@@ -1,4 +1,5 @@
 import * as Koa from 'koa';
+import router from './routers';
 
 const app:Koa = new Koa();
 
@@ -11,11 +12,10 @@ app.use(async (ctx: Koa.Context, next: () => Promise<any>) => {
     ctx.body = { error };
     ctx.app.emit('error', error, ctx);
   }
-})
-
-app.use(async (ctx:Koa.Context) => {
-  ctx.body = 'Hello world';
 });
+
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 app.on('error', console.error);
 

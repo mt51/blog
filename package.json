@@ -1,40 +1,47 @@
 {
-  "name": "blog",
-  "version": "1.0.0",
-  "description": "",
+  "name": "show-me-the-code",
+  "version": "0.0.1",
+  "description": "show me the code",
   "main": "index.js",
-  "dependencies": {
-    "koa": "^2.7.0",
-    "koa-bodyparser": "^4.2.1",
-    "koa-router": "^7.4.0",
-    "mysql2": "^1.6.5"
-  },
-  "devDependencies": {
-    "@types/koa": "^2.0.48",
-    "@types/koa-bodyparser": "^4.2.2",
-    "@types/koa-router": "^7.0.40",
-    "@types/node": "^11.10.5",
-    "nodemon": "^1.18.10",
-    "ts-node": "^8.0.3",
-    "tslint": "^5.13.1",
-    "tslint-config-airbnb": "^5.11.1",
-    "typescript": "^3.3.3333",
-    "webpack": "^4.29.6"
-  },
   "scripts": {
-    "lint": "tslint --project tsconfig.json --format stylish",
-    "build": "tsc",
-    "serve": "ts-node server/app.ts",
-    "start": "nodemon"
+    "start": "npm run dev",
+    "dev": "webpack-dev-server --env development --config ./build/webpack.base.conf.js",
+    "build": "webpack --config --env production ./build/webpack.base.conf.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mt51/blog.git"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^16.8.14",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-router": "^4.4.5",
+    "@types/react-router-dom": "^4.3.2",
+    "autoprefixer": "^9.5.1",
+    "babel-loader": "^8.0.5",
+    "clean-webpack-plugin": "^2.0.1",
+    "css-loader": "^2.1.1",
+    "eslint": "^5.16.0",
+    "eslint-loader": "^2.1.2",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.6.0",
+    "monaco-editor-webpack-plugin": "^1.7.0",
+    "node-sass": "^4.12.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "ts-loader": "^5.4.4",
+    "typescript": "^3.4.5",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.1",
+    "webpack-dev-server": "^3.3.1",
+    "webpack-merge": "^4.2.1"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/mt51/blog/issues"
-  },
-  "homepage": "https://github.com/mt51/blog#readme"
+  "dependencies": {
+    "antd": "^3.16.6",
+    "monaco-editor": "^0.16.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0"
+  }
 }
